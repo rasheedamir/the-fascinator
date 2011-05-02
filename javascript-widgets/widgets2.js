@@ -691,7 +691,7 @@ var widgets={forms:[], globalObject:this};
           tmp = displayRowTemplate.clone().show().addClass("count-this");
           visibleItems = xfind(displaySelector+".count-this");
           if(!force){
-              if(!any(values, function(_, v){ return v.charAt(0)!==""; })) return;
+              if(!any(values, function(_, v){ return v[0]!==""; })) return;
               if(addUniqueOnly){
                 // Check that this entry is unique
                 var unique=true;

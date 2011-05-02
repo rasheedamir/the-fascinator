@@ -127,7 +127,6 @@ var globalObject=this;
         detailDialog.text(name);
         detailDialog.append("<hr/>");
         data = details["result-metadata"]["all"];
-        console.log(data);
         if(data){
             var table=$("<table/>");
             function addField(term,field){

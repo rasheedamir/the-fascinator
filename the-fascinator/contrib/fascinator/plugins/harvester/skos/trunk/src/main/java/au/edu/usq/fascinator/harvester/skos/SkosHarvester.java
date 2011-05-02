@@ -140,6 +140,10 @@ public class SkosHarvester extends GenericHarvester {
 
     private RDFContainer container;
 
+    private String baseUri;
+
+    private String rootNode;
+
     /**
      * Skos harvester constructor
      */
@@ -153,7 +157,7 @@ public class SkosHarvester extends GenericHarvester {
     @Override
     public void init() throws HarvesterException {
         JsonSimpleConfig config;
-        log.info("Initialising Skos harvester");
+        log.info("Initialising SKOS harvester...");
         // Read config
         try {
             config = new JsonSimpleConfig(getJsonConfig().toString());
@@ -166,15 +170,18 @@ public class SkosHarvester extends GenericHarvester {
         if (!baseFile.equals("")) {
             skosFile = new File(baseFile);
         } else {
-            throw new HarvesterException("No skos file specified");
+            throw new HarvesterException("No SKOS file specified");
         }
+
+        baseUri = config.getString("", "harvester", "skos", "baseUri");
+        rootNode = config.getString("skos", "harvester", "skos", "rootNode");
 
         try {
             rdfModel = getRdfModel(new FileInputStream(skosFile));
             setConceptScheme();
             container = new RDFContainerImpl(rdfModel, conceptScheme);
         } catch (FileNotFoundException e) {
-            log.error("Skos rdf file not found");
+            log.error("SKOS RDF file not found");
         }
     }
 
@@ -188,9 +195,15 @@ public class SkosHarvester extends GenericHarvester {
     public Set<String> getObjectIdList() throws HarvesterException {
         Set<String> skosObjectIdList = new HashSet<String>();
 
-        String newUri = "anzrc/";
-        //Create the conceptSchema object
-        newUri += getType(conceptScheme.toString()) + "/";
+        String newUri = rootNode;
+        if (!"".equals(newUri) && !newUri.endsWith("/")) {
+            newUri += "/";
+        }
+        //Create the conceptScheme object
+        String type = getType(conceptScheme.toString());
+        if (!"".equals(type)) {
+            newUri += type + "/";
+        }
         try {
             skosObjectIdList.add(createSkosObject(conceptScheme, newUri));
         } catch (StorageException e1) {
@@ -206,7 +219,7 @@ public class SkosHarvester extends GenericHarvester {
         try {
             createConceptStructure(skosObjectIdList, concepts, newUri);
         } catch (StorageException e) {
-            throw new HarvesterException("Fail to create skos object");
+            throw new HarvesterException("Fail to create SKOS object");
         } catch (IOException e) {
             throw new HarvesterException("File creation file");
         }
@@ -254,8 +267,8 @@ public class SkosHarvester extends GenericHarvester {
      */
     private String getType(String uri) {
         String type = uri;
-        if (uri.indexOf("#") >= -1) {
-            type = uri.split("#")[1];
+        if (uri.startsWith(baseUri)) {
+            type = uri.substring(baseUri.length());
         }
         return type;
     }
@@ -276,7 +289,7 @@ public class SkosHarvester extends GenericHarvester {
         }
 
         if (conceptScheme == null) {
-            throw new HarvesterException("Conceptscheme not found in skos rdf");
+            throw new HarvesterException("skos:conceptScheme not found!");
         }
     }
 
@@ -308,7 +321,7 @@ public class SkosHarvester extends GenericHarvester {
             throws HarvesterException, StorageException, IOException {
         Storage storage = getStorage();
         String conceptId = getType(conceptUri.toString());
-        log.info("Creating Skos: {}", conceptId);
+        log.info("Extracting SKOS RDF fragment for {}", conceptId);
         String oid = DigestUtils.md5Hex(conceptId);
         DigitalObject object = StorageUtils.getDigitalObject(storage, oid);
         String pid = conceptId + ".rdf";
@@ -321,7 +334,7 @@ public class SkosHarvester extends GenericHarvester {
         // update object metadata
         Properties props = object.getMetadata();
         props.setProperty("render-pending", "true");
-        props.setProperty("skos-uri", newConceptUri);
+        props.setProperty("skos-uri", newConceptUri.replaceAll("//", "/"));
         props.setProperty("concept-uri", conceptUri.toString());
 
         object.close();
@@ -335,8 +348,7 @@ public class SkosHarvester extends GenericHarvester {
      * @return serialized concept in String
      */
     private String serialize(URI uri) {
-        ClosableIterator<? extends Statement> iterator = rdfModel
-                .findStatements(uri, Variable.ANY, Variable.ANY);
+        ClosableIterator<? extends Statement> iterator = rdfModel.findStatements(uri, Variable.ANY, Variable.ANY);
 
         Model m = RDF2Go.getModelFactory().createModel();
         m.open();
@@ -372,5 +384,4 @@ public class SkosHarvester extends GenericHarvester {
         }
         return model;
     }
-
 }

@@ -1,8 +1,0 @@
-{
-    "harvester": {
-        "type": "skos",
-        "skos": {
-            "baseFile": "${test.dir}/for-smaller.rdf"
-        }
-    }
-}

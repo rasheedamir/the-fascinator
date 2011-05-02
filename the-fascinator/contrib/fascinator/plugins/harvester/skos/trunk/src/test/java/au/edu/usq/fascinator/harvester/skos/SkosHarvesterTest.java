@@ -67,9 +67,16 @@ public class SkosHarvesterTest {
      */
     @Test
     public void getConceptScheme() throws Exception {
-        SkosHarvester skosHarvester = getHarvester("/skos-config.json");
+        SkosHarvester skosHarvester = getHarvester("/for-subset.json");
         Assert.assertEquals(skosHarvester.getConceptScheme().toString(),
                 "http://purl.org/anzsrc/for/#for");
+    }
+
+    @Test
+    public void getConceptScheme2() throws Exception {
+        SkosHarvester skosHarvester = getHarvester("/for08-subset.json");
+        Assert.assertEquals(skosHarvester.getConceptScheme().toString(),
+                "http://purl.org/asc/1297.0/2008/for/");
     }
 
     /**
@@ -79,9 +86,16 @@ public class SkosHarvesterTest {
      */
     @Test
     public void getObjectIdList() throws Exception {
-        SkosHarvester skosHarvester = getHarvester("/skos-config.json");
+        SkosHarvester skosHarvester = getHarvester("/for-subset.json");
         Set<String> concepts = skosHarvester.getObjectIdList();
         Assert.assertEquals(15, concepts.size());
+    }
+
+    @Test
+    public void getObjectIdList2() throws Exception {
+        SkosHarvester skosHarvester = getHarvester("/for08-subset.json");
+        Set<String> concepts = skosHarvester.getObjectIdList();
+        Assert.assertEquals(99, concepts.size());
     }
 
     private SkosHarvester getHarvester(String filename) throws Exception {

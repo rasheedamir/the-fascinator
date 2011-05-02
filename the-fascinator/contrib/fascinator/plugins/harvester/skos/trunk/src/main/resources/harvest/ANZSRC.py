@@ -119,6 +119,11 @@ class IndexData:
                 concept = conceptUri.split(skosNs)[1]
                 self.utils.add(self.index, "skos_%s" % concept, value)
 
+            rdfNs = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+            if conceptUri.startswith(rdfNs):
+                concept = conceptUri.split(rdfNs)[1]
+                self.utils.add(self.index, "rdf_%s" % concept, value)
+
     def __getSingleValueFromCollection(self, rdfModel, subjectURI, predicateURI, objURI):
         collection = rdfModel.findStatements(subjectURI, predicateURI, objURI)
         value = ""

@@ -104,7 +104,11 @@ var globalObject=this;
                             var value=div.find("input[name=name]:checked").val();
                             dialog.dialog("close");
                             detailDialog.dialog("close");
-                            if(value) callback(true, JSON.parse(value));
+                            if(value){
+                                callback(true, JSON.parse(value));
+                            }else{
+                                callback(false);
+                            }
                           },
                           "Clear":function(){
                             dialog.dialog("close");

@@ -1030,7 +1030,7 @@ var widgets={forms:[], globalObject:this};
         }
         onSelection(child);
       }
-      s.change(onChange);
+      s.change(onChange).change();
       //setTimeout(onChange, 10);
       return s;
   }
@@ -1074,7 +1074,7 @@ var widgets={forms:[], globalObject:this};
             }
         }
       };
-      selAdd.bind("disableTest", addButtonDisableTest);
+      selAdd.bind("disableTest", addButtonDisableTest).trigger("disableTest");
       onSelection = function(info){
         //info.namespace, info.id, info.label, info.selectable, info.parent
         while(info.selectable!==false && info.selectable!==true){
@@ -1192,12 +1192,6 @@ var widgets={forms:[], globalObject:this};
                 saLabel.width(w>saLabelWidth?w:saLabelWidth);
             }
         }); //.trigger("onDataChanged");
-        addButtonDisableTest = function(){
-            //if(saLabel.val()){
-            //    selAdd.attr("disabled", true);
-            //}
-        };
-        selAdd.bind("disableTest", addButtonDisableTest);
         ds.parent().find(".clear-item").click(function(){
             saId.val("").trigger("onDataChanged");
             saLabel.val("").trigger("onDataChanged");

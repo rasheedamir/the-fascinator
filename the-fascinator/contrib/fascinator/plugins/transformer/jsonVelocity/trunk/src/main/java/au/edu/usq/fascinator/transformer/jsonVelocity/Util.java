@@ -175,6 +175,17 @@ public class Util {
      * @throws ParseException if and incorrect input is supplied
      */
     public String getW3CDateTime(String dateTime) throws ParseException {
+        return getDateTime(dateTime, "yyyy-MM-dd'T'HH:mm:ssZ");
+    }
+
+    /**
+     * Cleanup the supplied datetime value into a W3C format.
+     *
+     * @param dateTime Datetime to clean
+     * @return String The cleaned value
+     * @throws ParseException if and incorrect input is supplied
+     */
+    public String getDateTime(String dateTime, String format) throws ParseException {
         if (dateTime != null && !"".equals(dateTime)) {
             if (dateTime.indexOf("-") == -1) {
                 dateTime = dateTime + "-01-01";
@@ -185,7 +196,7 @@ public class Util {
                 }
             }
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            SimpleDateFormat odf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+            SimpleDateFormat odf = new SimpleDateFormat(format);
 
             Date date = sdf.parse(dateTime);
             //log.info("ISO8601 Date:  {}", formatDate(date));

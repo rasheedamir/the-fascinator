@@ -964,10 +964,8 @@ var widgets={forms:[], globalObject:this};
           ns = (json.namespace || "") || (parent.namespace || "");
           selectable = (json.selectable==null)?(!!parent.selectable):(!!json.selectable);
           s = $("<select/>");
-          if(!json["default"]){
-            o = $("<option value=''>Please select one...</option>");
-            s.append(o);
-          }
+          o = $("<option value=''>Please select one...</option>");
+          s.append(o);
           selected = json.restored || json["default"];
           $.each(json.list, function(c, i){
             if(i){

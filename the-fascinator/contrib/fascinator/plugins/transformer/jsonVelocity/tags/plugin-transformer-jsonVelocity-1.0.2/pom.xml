@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>au.edu.usq.fascinator.plugins</groupId>
+    <artifactId>plugin-transformer-jsonVelocity</artifactId>
+    <version>1.0.2</version>
+    <name>JSON Velocity Transformer</name>
+    <parent>
+        <artifactId>organisation</artifactId>
+        <groupId>au.edu.usq.fascinator</groupId>
+        <version>1.0.1</version>
+    </parent>
+    <properties>
+        <fascinator.version>1.0.2</fascinator.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>au.edu.usq.fascinator</groupId>
+            <artifactId>fascinator-common</artifactId>
+            <version>${fascinator.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>velocity</groupId>
+                    <artifactId>velocity</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>au.edu.usq.fascinator</groupId>
+            <artifactId>fascinator-plugin-api</artifactId>
+            <version>${fascinator.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>au.edu.usq.fascinator.plugins</groupId>
+            <artifactId>plugin-storage-ram</artifactId>
+            <version>${fascinator.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>1.6.4</version>
+        </dependency>
+    </dependencies>
+    <scm>
+        <url>http://the-fascinator.googlecode.com/svn/the-fascinator/contrib/fascinator/plugins/transformer/jsonVelocity/tags/plugin-transformer-jsonVelocity-1.0.2</url>
+        <connection>scm:svn:http://the-fascinator.googlecode.com/svn/the-fascinator/contrib/fascinator/plugins/transformer/jsonVelocity/tags/plugin-transformer-jsonVelocity-1.0.2</connection>
+        <developerConnection>scm:svn:https://the-fascinator.googlecode.com/svn/the-fascinator/contrib/fascinator/plugins/transformer/jsonVelocity/tags/plugin-transformer-jsonVelocity-1.0.2</developerConnection>
+    </scm>
+</project>

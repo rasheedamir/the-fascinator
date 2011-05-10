@@ -1,0 +1,11 @@
+{
+    "urlBase" : "http://localhost:8080/redbox/",
+    "transformerDefaults": {
+        "jsonVelocity": {
+            "id" : "jsonVelocity",
+            "sourcePayload" : "object.tfpackage",
+            "individualTemplate": "rif_cs.vm",
+            "templatesPath" : "src/main/resources/templates/"
+         }
+     }
+}

@@ -3,14 +3,14 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>au.edu.usq.fascinator.plugins</groupId>
     <artifactId>plugin-harvester-skos</artifactId>
-    <version>0.1.0</version>
+    <version>0.9.0</version>
     <name>The Fascinator - Plugin - Harvester - SKOS</name>
     <description>Performs a batch harvest of any SKOS Concept Shemes</description>
-    <url>http://fascinator.usq.edu.au/trac/wiki/tf2/DeveloperNotes/plugins/harvester/anzsrc</url>
+    <url>https://sites.google.com/site/fascinatorhome/home/documentation/technical/documents/common-library/plugins/harvester</url>
     <parent>
         <artifactId>organisation</artifactId>
         <groupId>au.edu.usq.fascinator</groupId>
-        <version>0.5.1</version>
+        <version>1.0.1</version>
     </parent>
     <properties>
         <fascinator.version>1.0.2</fascinator.version>
@@ -46,8 +46,8 @@
     </dependencies>
 
   <scm>
-    <connection>scm:svn:http://fascinator.usq.edu.au/svn/project_meta/tags/plugin-harvester-skos-0.1.0</connection>
-    <developerConnection>scm:svn:https://fascinator.usq.edu.au/svn-auth/project_meta/tags/plugin-harvester-skos-0.1.0</developerConnection>
-    <url>http://fascinator.usq.edu.au/svn/project_meta/tags/plugin-harvester-skos-0.1.0</url>
+    <connection>scm:svn:http://the-fascinator.googlecode.com/svn/the-fascinator/contrib/fascinator/plugins/harvester/skos/tags/plugin-harvester-skos-0.9.0</connection>
+    <developerConnection>scm:svn:https://the-fascinator.googlecode.com/svn/the-fascinator/contrib/fascinator/plugins/harvester/skos/tags/plugin-harvester-skos-0.9.0</developerConnection>
+    <url>http://the-fascinator.googlecode.com/svn/the-fascinator/contrib/fascinator/plugins/harvester/skos/tags/plugin-harvester-skos-0.9.0</url>
   </scm>
 </project>

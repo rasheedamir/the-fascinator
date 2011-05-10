@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>au.edu.usq.fascinator.plugins</groupId>
     <artifactId>plugin-transformer-jsonVelocity</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3-SNAPSHOT</version>
     <name>JSON Velocity Transformer</name>
     <parent>
         <artifactId>organisation</artifactId>
@@ -49,8 +49,8 @@
         </dependency>
     </dependencies>
     <scm>
-        <url>http://the-fascinator.googlecode.com/svn/the-fascinator/contrib/fascinator/plugins/transformer/jsonVelocity/tags/plugin-transformer-jsonVelocity-1.0.2</url>
-        <connection>scm:svn:http://the-fascinator.googlecode.com/svn/the-fascinator/contrib/fascinator/plugins/transformer/jsonVelocity/tags/plugin-transformer-jsonVelocity-1.0.2</connection>
-        <developerConnection>scm:svn:https://the-fascinator.googlecode.com/svn/the-fascinator/contrib/fascinator/plugins/transformer/jsonVelocity/tags/plugin-transformer-jsonVelocity-1.0.2</developerConnection>
+        <url>http://the-fascinator.googlecode.com/svn/the-fascinator/contrib/fascinator/plugins/transformer/jsonVelocity/</url>
+        <connection>scm:svn:http://the-fascinator.googlecode.com/svn/the-fascinator/contrib/fascinator/plugins/transformer/jsonVelocity/</connection>
+        <developerConnection>scm:svn:https://the-fascinator.googlecode.com/svn/the-fascinator/contrib/fascinator/plugins/transformer/jsonVelocity/</developerConnection>
     </scm>
 </project>

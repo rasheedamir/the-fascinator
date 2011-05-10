@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>au.edu.usq.fascinator.plugins</groupId>
+    <artifactId>plugin-harvester-skos</artifactId>
+    <version>0.9.0</version>
+    <name>The Fascinator - Plugin - Harvester - SKOS</name>
+    <description>Performs a batch harvest of any SKOS Concept Shemes</description>
+    <url>https://sites.google.com/site/fascinatorhome/home/documentation/technical/documents/common-library/plugins/harvester</url>
+    <parent>
+        <artifactId>organisation</artifactId>
+        <groupId>au.edu.usq.fascinator</groupId>
+        <version>1.0.1</version>
+    </parent>
+    <properties>
+        <fascinator.version>1.0.2</fascinator.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>au.edu.usq.fascinator</groupId>
+            <artifactId>fascinator-common</artifactId>
+            <version>${fascinator.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>au.edu.usq.fascinator</groupId>
+            <artifactId>fascinator-plugin-api</artifactId>
+            <version>${fascinator.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>au.edu.usq.fascinator</groupId>
+            <artifactId>fascinator-vocabulary</artifactId>
+            <version>${fascinator.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>au.edu.usq.fascinator.plugins</groupId>
+            <artifactId>plugin-storage-ram</artifactId>
+            <version>${fascinator.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.6</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+  <scm>
+    <connection>scm:svn:http://the-fascinator.googlecode.com/svn/the-fascinator/contrib/fascinator/plugins/harvester/skos/tags/plugin-harvester-skos-0.9.0</connection>
+    <developerConnection>scm:svn:https://the-fascinator.googlecode.com/svn/the-fascinator/contrib/fascinator/plugins/harvester/skos/tags/plugin-harvester-skos-0.9.0</developerConnection>
+    <url>http://the-fascinator.googlecode.com/svn/the-fascinator/contrib/fascinator/plugins/harvester/skos/tags/plugin-harvester-skos-0.9.0</url>
+  </scm>
+</project>

@@ -1,0 +1,17 @@
+#summary Instructions and information on deploying Maven artefacts.
+#labels maven
+= Introduction =
+
+This page is a work-in-progress. Based on the [http://code.google.com/p/redbox-mint/wiki/DeployingMaven ReDBox documentation] for the same process.
+
+The intention of this page is to show developers what needs to be deployed to Sonatype's Maven repository for migration to Maven Central, as well as highlighting how to do so.
+
+= What gets deployed =
+
+Each heading below focuses on the parts of the application that need to be separately deployed, and they are listed in order of dependency.
+
+== Organisational POM ==
+
+The organisational POM defines top-level project information, and lists Sonatype's OSS Project POM as its parent. Trunk and tagged releases are available in their own area of subversion:
+
+http://the-fascinator.googlecode.com/svn/project_meta

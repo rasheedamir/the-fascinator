@@ -1,16 +1,16 @@
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>au.edu.usq.fascinator</groupId>
+    <groupId>com.googlecode.the-fascinator</groupId>
     <artifactId>organisation</artifactId>
     <packaging>pom</packaging>
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
     <name>Fascinator Project</name>
     <version>1.0.2-SNAPSHOT</version>
-    <description>
-  This Maven project provides a central point for
-  information regarding The
-  Fascinator and its many works.
-    </description>
+    <description>This Maven project provides a central point for information regarding The Fascinator and its many works.</description>
     <licenses>
         <license>
             <name>GNU GENERAL PUBLIC LICENSE V2</name>
@@ -95,20 +95,6 @@
             <archive>http://groups.google.com/group/the-fascinator-dev</archive>
         </mailingList>
     </mailingLists>
-    <distributionManagement>
-        <repository>
-            <id>fascinator-releases</id>
-            <name>The Fascinator Releases</name>
-            <url>https://fascinator.usq.edu.au/nexus/content/repositories/releases
-            </url>
-        </repository>
-        <snapshotRepository>
-            <id>fascinator-snapshots</id>
-            <name>The Fascinator Snapshots</name>
-            <url>https://fascinator.usq.edu.au/nexus/content/repositories/snapshots
-            </url>
-        </snapshotRepository>
-    </distributionManagement>
     <build>
         <pluginManagement>
             <plugins>

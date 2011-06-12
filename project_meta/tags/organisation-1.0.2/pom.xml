@@ -1,0 +1,128 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.googlecode.the-fascinator</groupId>
+    <artifactId>organisation</artifactId>
+    <packaging>pom</packaging>
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
+    <name>Fascinator Project</name>
+    <version>1.0.2</version>
+    <description>This Maven project provides a central point for information regarding The Fascinator and its many works.</description>
+    <licenses>
+        <license>
+            <name>GNU GENERAL PUBLIC LICENSE V2</name>
+            <url>http://www.gnu.org/licenses/gpl-2.0.txt</url>
+        </license>
+    </licenses>
+    <url>https://sites.google.com/site/fascinatorhome/</url>
+    <issueManagement>
+        <system>Google</system>
+        <url>http://code.google.com/p/the-fascinator/issues/list</url>
+    </issueManagement>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jdk-version>1.6</jdk-version>
+    </properties>
+    <scm>
+        <url>http://the-fascinator.googlecode.com/svn/project_meta/tags/organisation-1.0.2</url>
+        <connection>scm:svn:http://the-fascinator.googlecode.com/svn/project_meta/tags/organisation-1.0.2</connection>
+        <developerConnection>scm:svn:https://the-fascinator.googlecode.com/svn/project_meta/tags/organisation-1.0.2</developerConnection>
+    </scm>
+    <developers>
+        <developer>
+            <id>dickinso</id>
+            <name>Duncan Dickinson</name>
+            <url>http://duncan.dickinson.name</url>
+            <roles>
+                <role>Project Manager</role>
+                <role>Developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>dye</id>
+            <name>Bronwyn Chandler</name>
+            <roles>
+                <role>Project Manager</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>octalina</id>
+            <name>Linda Octalina</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>lucido</id>
+            <name>Oliver Lucido</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>sefton</id>
+            <name>Peter Sefton</name>
+            <url>http://ptsefton.com/</url>
+            <roles>
+                <role>Manager</role>
+                <role>Consultant</role>
+                <role>Tester</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>ward</id>
+            <name>Ron Ward</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>pendlebu</id>
+            <name>Greg Pendlebury</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </developer>
+    </developers>
+    <inceptionYear>2009</inceptionYear>
+    <mailingLists>
+        <mailingList>
+            <name>Developer List</name>
+            <post>the-fascinator-dev@googlegroups.com</post>
+            <archive>http://groups.google.com/group/the-fascinator-dev</archive>
+        </mailingList>
+    </mailingLists>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <source>${jdk-version}</source>
+                        <target>${jdk-version}</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>2.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>2.1.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-report-plugin</artifactId>
+                    <version>2.5</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+</project>

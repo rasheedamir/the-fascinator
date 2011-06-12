@@ -1,12 +1,12 @@
-#summary Instructions and information on deploying Maven artefacts.
+#summary Instructions and information on deploying Maven artifacts.
 #labels maven
 = Introduction =
 
 This page is a work-in-progress. Based on the [http://code.google.com/p/redbox-mint/wiki/DeployingMaven ReDBox documentation] for the same process.
 
-The intention of this page is to show developers what needs to be deployed to Sonatype's Maven repository for migration to Maven Central, as well as highlighting how to do so.
+The intention of this page is to show developers what needs to be deployed (and how) to Sonatype's Nexus repository, both for developer snapshots, as well as for migration to Maven Central.
 
-= What gets deployed =
+= What gets deployed? =
 
 Each heading below focuses on the parts of the application that need to be separately deployed, and they are listed in order of dependency.
 
@@ -15,3 +15,70 @@ Each heading below focuses on the parts of the application that need to be separ
 The organisational POM defines top-level project information, and lists Sonatype's OSS Project POM as its parent. Trunk and tagged releases are available in their own area of subversion:
 
 http://the-fascinator.googlecode.com/svn/project_meta
+
+----
+
+= How does deployment work? =
+
+So the nitty-gritty required for a developer to deploy artifacts to Sonatype's Maven repository is fairly basic, although it looks daunting at first, particularly if you aren't that familiar with Maven. This section should highlight the process.
+
+== Background stuff ==
+Please refer to [https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide OSS Maven Repository Usage Guide] for an overview of the Sonatype OSS Maven Repository infrastructure.
+ * Steps 1 & 2 are the focus, you need to register and get a login.
+ * If you are to release anything you will also need a GPG key (Step 5). Deploying snapshots for basic dev work does not require this.
+ * Once you have a login for [https://issues.sonatype.org] you need to visit [https://issues.sonatype.org/browse/OSSRH-1683] and ask a Sonatype staff member to give you access to the project.
+
+== Configuration ==
+To make your credentials available to Maven add something like this to your settings.xml file:
+{{{
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                      http://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <servers>
+        <server>
+            <id>sonatype-nexus-snapshots</id>
+            <username>XXXXX</username>
+            <password>XXXXX</password>
+        </server>
+        <server>
+            <id>sonatype-nexus-staging</id>
+            <username>XXXXX</username>
+            <password>XXXXX</password>
+        </server>
+    </servers>
+</settings>
+}}}
+
+== Deploying Snapshots ==
+This is pretty easy:
+{{{
+mvn clean
+mvn deploy
+}}}
+
+If you're working on a SNAPSHOT and that's all you want to deploy, STOP HERE. The rest if for a tagged release.
+
+== Releasing Artifacts ==
+You MUST ensure that any dependencies are for released versions and not SNAPSHOTS. This may mean you have to release artifacts from other code bases first. 
+
+When you've sorted out dependencies you can start the release procedure below:
+
+{{{
+mvn release:clean
+mvn release:prepare
+mvn release:perform
+}}}
+
+The prepare step in particular will commit changes through subversion to migrate the current SNAPSHOT to a tagged release and roll forward the SNAPSHOT number on trunk. For this reason you shouldn't ever need to manually alter the version numbers in POMs; the release process will do this for you.
+
+A number of prompts will confirm details regarding the release and it is generally advised to leave this as is. You will also be prompted for you GPG passphrase during the release if you have one (generally a good idea).
+
+The release is not completed yet, you've just released to Sonatype's staging repository, so you need to follow [https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide#SonatypeOSSMavenRepositoryUsageGuide-8.ReleaseIt Step 8] from their release guide, and close the staging repository to have it deployed to Maven Central.
+
+== Finding Deployed Artifacts ==
+Snapshots: [https://oss.sonatype.org/content/repositories/snapshots/com/googlecode/the-fascinator/]
+
+Release staging area: [https://oss.sonatype.org/content/groups/staging/com/googlecode/the-fascinator/]
+
+Maven Central: [http://search.maven.org/#browse|]

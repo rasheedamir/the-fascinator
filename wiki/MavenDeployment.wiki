@@ -75,7 +75,7 @@ The prepare step in particular will commit changes through subversion to migrate
 A number of prompts will confirm details regarding the release and it is generally advised to leave this as is. You will also be prompted for you GPG passphrase during the release if you have one (generally a good idea).
 
 == Releasing Artifacts ==
-The public release is not completed yet, you've just released to Sonatype's staging repository, so you need to follow [https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide#SonatypeOSSMavenRepositoryUsageGuide-8.ReleaseIt Step 8] from their release guide, and close the staging repository to have it deployed to Maven Central (happens hourly).
+The public release is not completed yet, you've just released to Sonatype's staging repository, so you need to follow [https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide#SonatypeOSSMavenRepositoryUsageGuide-8.ReleaseIt Step 8] from their release guide, and close the [https://oss.sonatype.org/index.html#stagingRepositories staging repository] to have it deployed to Maven Central (happens hourly).
 
 In between you closing the staging repository and the synch to Maven central, you will see the artifact(s) in the staging area URL below.
 

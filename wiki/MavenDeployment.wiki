@@ -85,3 +85,6 @@ Snapshots: [https://oss.sonatype.org/content/repositories/snapshots/com/googleco
 Release staging area: [https://oss.sonatype.org/content/groups/staging/com/googlecode/the-fascinator/]
 
 Maven Central: [http://search.maven.org/#browse|]
+
+== Third Party Dependencies ==
+Sonatype have [https://docs.sonatype.org/display/Repository/Uploading+3rd-party+Artifacts+to+Maven+Central documentation] on how to deploy 3rd party artifacts. This is how you deploy JAR files and such from other users/projects that don't use Maven, or don't have a publically available repository.

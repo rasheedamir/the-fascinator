@@ -16,6 +16,13 @@ The organisational POM defines top-level project information, and lists Sonatype
 
 http://the-fascinator.googlecode.com/svn/project_meta
 
+== Vocabulary Library (OPTIONAL) ==
+
+As per [https://sites.google.com/site/fascinatorhome/home/documentation/technical/details/maven-structure the documentation], the Vocabulary is in an odd spot in our architecture. In terms of build/release processes this isn't a big deal, but it is worth noting that the POM contains a commented out section for using the Schemagen Plugin. The Schemagen plugin has it's own codebase and documentation (TODO: deploy the site build and link to this somewhere).
+
+*IMPORTANT:* _The Vocabulary Library does not need to be built (or released) independently unless you are altering the underlying vocabularies via the Schemagen Plugin. The VAST majority of developers will never need to do this._
+
+
 ----
 
 = How does deployment work? =

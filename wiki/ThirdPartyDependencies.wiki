@@ -59,3 +59,4 @@ Inside the `trunk` folder modify `pom.xml` to add the required elements for a So
         </developer>
     </developers>
 }}}
+*Maven Central:* http://search.maven.org/#browse|-907833221

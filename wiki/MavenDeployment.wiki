@@ -11,17 +11,17 @@ The intention of this page is to show developers what needs to be deployed (and 
 Each heading below focuses on the parts of the application that need to be separately deployed, and they are listed in order of dependency.
 
 == Organisational POM ==
-
 The organisational POM defines top-level project information, and lists Sonatype's OSS Project POM as its parent. Trunk and tagged releases are available in their own area of subversion:
 
 http://the-fascinator.googlecode.com/svn/project_meta
 
 == Vocabulary Library (OPTIONAL) ==
-
 As per [https://sites.google.com/site/fascinatorhome/home/documentation/technical/details/maven-structure the documentation], the Vocabulary is in an odd spot in our architecture. In terms of build/release processes this isn't a big deal, but it is worth noting that the POM contains a commented out section for using the Schemagen Plugin. The Schemagen plugin has it's own codebase and documentation (TODO: deploy the site build and link to this somewhere).
 
 *IMPORTANT:* _The Vocabulary Library does not need to be built (or released) independently unless you are altering the underlying vocabularies via the Schemagen Plugin. The VAST majority of developers will never need to do this._
 
+== Third Party Dependencies ==
+Any parts of the core platform that depend on external code libraries not currently available via Maven will need to uploaded to Sonatype. We maintain a list on [ThirdPartyDependencies a separate page]. This list should be kept up-to-date, so if you are adding a new dependency not only the the upload is required before you release, *but please update the list too*.
 
 ----
 
@@ -95,6 +95,3 @@ Snapshots: [https://oss.sonatype.org/content/repositories/snapshots/com/googleco
 Release staging area: [https://oss.sonatype.org/content/groups/staging/com/googlecode/the-fascinator/]
 
 Maven Central: [http://search.maven.org/#browse|-214281614]
-
-== Third Party Dependencies ==
-Sonatype have [https://docs.sonatype.org/display/Repository/Uploading+3rd-party+Artifacts+to+Maven+Central documentation] on how to deploy 3rd party artifacts. This is how you deploy JAR files and such from other users/projects that don't use Maven, or don't have a publically available repository.

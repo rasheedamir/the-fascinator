@@ -1,0 +1,38 @@
+#summary A current list of 3rd party dependencies used by the core platform.
+
+= Introduction =
+This list contains information on all current third party dependencies in use by The Fascinator. Developers who add new dependencies should try to keep this list up to date.
+
+== Build process ==
+Unless otherwise noted, the build process for each bundle simply follows the Sonatype documentation.
+
+{{{
+mvn source:jar javadoc:jar package gpg:sign repository:bundle-create
+}}}
+
+Upload and release the resulting bundle [https://docs.sonatype.org/display/Repository/Uploading+3rd-party+Artifacts+to+Maven+Central as per documentation].
+
+=== OAI4J ===
+*Web page:* http://oai4j-client.sourceforge.net/
+*Used by:* OAI-PMH Harvester
+*Build process:*
+Download the source, currently version 0.6 SNAPSHOT:
+{{{
+https://oai4j-client.svn.sourceforge.net/svnroot/oai4j-client
+}}}
+
+Inside the `trunk` folder modify `pom.xml` to add the required elements for a Sonatype upload. Most is new, although `<url>` has been modified to a more relevant location:
+{{{
+    <url>http://oai4j-client.sourceforge.net/</url>
+    <description>OAI4J is a Java library that implements a client API for the OAI-PMH standard specification from the Open Archives Initiative. It also has support for the upcoming OAI-ORE specification.</description>
+    <licenses>
+        <license>
+            <name>Apache License V2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
+    <scm>
+        <url>http://oai4j-client.svn.sourceforge.net/viewvc/oai4j-client/</url>
+        <connection>scm:svn:https://oai4j-client.svn.sourceforge.net/svnroot/oai4j-client</connection>
+    </scm>
+}}}

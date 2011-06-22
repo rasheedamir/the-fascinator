@@ -22,8 +22,10 @@ Download the source, currently version 0.6 SNAPSHOT:
 https://oai4j-client.svn.sourceforge.net/svnroot/oai4j-client
 }}}
 
-Inside the `trunk` folder modify `pom.xml` to add the required elements for a Sonatype upload. Most is new, although `<url>` has been modified to a more relevant location:
+Inside the `trunk` folder modify `pom.xml` to add the required elements for a Sonatype upload. Most is new, although `<url>` has been modified to a more relevant location and the version has been modified to match the [http://sourceforge.net/projects/oai4j-client/files/oai4j-client/OAI4J%200.6%20Beta%201/ beta 1 JAR] from the sourceforge site:
 {{{
+    <version>0.6b1</version>
+    ...
     <url>http://oai4j-client.sourceforge.net/</url>
     <description>OAI4J is a Java library that implements a client API for the OAI-PMH standard specification from the Open Archives Initiative. It also has support for the upcoming OAI-ORE specification.</description>
     <licenses>

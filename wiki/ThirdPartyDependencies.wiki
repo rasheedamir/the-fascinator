@@ -38,4 +38,24 @@ Inside the `trunk` folder modify `pom.xml` to add the required elements for a So
         <url>http://oai4j-client.svn.sourceforge.net/viewvc/oai4j-client/</url>
         <connection>scm:svn:https://oai4j-client.svn.sourceforge.net/svnroot/oai4j-client</connection>
     </scm>
+
+    <developers>
+        <developer>
+            <id>bobcat_zed</id>
+            <name>Oskar</name>
+            <url>http://bobcat_zed.users.sourceforge.net/</url>
+            <roles>
+                <role>Admin</role>
+                <role>Developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>pangloss</id>
+            <name>E S</name>
+            <url>http://pangloss.users.sourceforge.net/</url>
+            <roles>
+                <role>Admin</role>
+            </roles>
+        </developer>
+    </developers>
 }}}

@@ -12,6 +12,7 @@ mvn source:jar javadoc:jar package gpg:sign repository:bundle-create
 
 Upload and release the resulting bundle [https://docs.sonatype.org/display/Repository/Uploading+3rd-party+Artifacts+to+Maven+Central as per documentation].
 
+----
 === OAI4J ===
 *Web page:* http://oai4j-client.sourceforge.net/<br/>
 *Used by:* OAI-PMH Harvester<br/>

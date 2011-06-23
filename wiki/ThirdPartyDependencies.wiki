@@ -61,7 +61,8 @@ Inside the `trunk` folder modify `pom.xml` to add the required elements for a So
 }}}
 *Maven Central:* http://search.maven.org/#browse|-907833221
 
-=== Jython Standalone ===
+----
+=== Jython Standalone 2.5.1 ===
 *Web page:* http://www.jython.org/<br/>
 *Used by:* Portal, Solr Indexer etc.<br/>
 *Build process:*<br/>
@@ -122,7 +123,7 @@ I renamed the resulting JAR to `jython-standalone-2.5.1.jar` and dropped this PO
 </project>
 }}}
 
-The bundle process fails to create JavaDoc, but they are also missing from Sonatype's [https://oss.sonatype.org/content/groups/python/org/python/jython/2.5.0/ existing Jython artifact(s)].
+The bundle process fails to create !JavaDoc, but they are also missing from Sonatype's [https://oss.sonatype.org/content/groups/python/org/python/jython/2.5.0/ existing Jython artifact(s)].
 
 *Background Information:* I found [http://old.nabble.com/Please-deploy-version-2.5.2-to-Maven-repository-td31369024.html many] [http://old.nabble.com/Jython-2.5.1-missing-from-Maven-td26857910.html different] [http://old.nabble.com/2.5.1-Maven-Central-upload-td28037871.html#a28037871 requests] to have up-to-date versions of Jython artifacts hosted somewhere... they all appear to have been ignored. No mention of standalone JARs.
 

@@ -131,11 +131,11 @@ Checkout the 2.5.1 tagged release from here: https://jython.svn.sourceforge.net/
 
 All the work we are concerned with is in the `jython` directory. Start by creating a `maven-bundle` sub-directory there. You'll note that there is already a `maven` folder from earlier work in the community but I've ignored this for several reasons:
  * The bundle JARs aren't signed (trivial to fix).
- * No JavaDoc (trivial to fix).
+ * No !JavaDoc (trivial to fix).
  * Incomplete POM (trivial to fix).
  * *Not for the Standalone JAR* (bugger!).
 
-Perhaps someone from the Jython community could fix this more easily, but after struggling with the problem for more then a day I just took the easiest road... a new bundle using JavaDoc and Source JARs from a build, combined with the officially *installed* binary for the same version.
+Perhaps someone from the Jython community could fix this more easily, but after struggling with the problem for more then a day I just took the easiest road... a new bundle using !JavaDoc and Source JARs from a build, combined with the officially *installed* binary for the same version.
 
  # In the `maven-bundle` sub-directory, copy the installed `jython-standalone-2.5.1.jar` and `pom.xml` we had from earlier.
  # In the base `jython` directory, create a new `ant.properties` file (contents below).
@@ -189,7 +189,7 @@ After all this you should finally be ready to run:
 ant maven-bundle
 }}}
 
-This will create Source and JavaDoc JARs from the source code and copy them beside the binary JAR and POM we already copied. Then it will sign all of the files (prompting you for a passphrase if appropriate) and bundle the results together.
+This will create Source and !JavaDoc JARs from the source code and copy them beside the binary JAR and POM we already copied. Then it will sign all of the files (prompting you for a passphrase if appropriate) and bundle the results together.
 
 The bundle can be directly upload to Sonatype, no Maven executions required.
 

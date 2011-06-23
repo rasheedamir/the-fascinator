@@ -128,7 +128,7 @@ Install the JAR (with POM) into your local Maven repository:
 mvn install:install-file -DgroupId=org.python -DartifactId=jython-standalone -Dversion=2.5.1 -Dpackaging=jar -Dfile=/your/path/to/jython-standalone-2.5.1.jar -DpomFile=/your/path/to/pom.xml
 }}}
 
-And finally, pack the installed JAR with the POM into a bundle (this replaces the normal 'bundle-create' call:
+And finally, pack the installed JAR with the POM into a bundle (this replaces the normal 'bundle-create' call):
 {{{
 mvn source:jar javadoc:jar package gpg:sign repository:bundle-pack -DgroupId=org.python -DartifactId=jython-standalone -Dversion=2.5.1
 }}}

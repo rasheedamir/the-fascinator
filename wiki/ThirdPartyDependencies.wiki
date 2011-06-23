@@ -68,7 +68,7 @@ Inside the `trunk` folder modify `pom.xml` to add the required elements for a So
 *Build process:*<br/>
 Follow the [http://wiki.python.org/jython/InstallationInstructions installation instructions] for Jython 2.5.1 in 'Standalone Mode'.
 
-I renamed the resulting JAR to `jython-standalone-2.5.1.jar` and dropped this POM into the same directory: 
+I renamed the resulting JAR to `jython-standalone-2.5.1.jar`. Now you also need a POM to go with this JAR (same directory is fine): 
 {{{
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
@@ -121,6 +121,16 @@ I renamed the resulting JAR to `jython-standalone-2.5.1.jar` and dropped this PO
     </reporting>
 
 </project>
+}}}
+
+Install the JAR (with POM) into your local Maven repository:
+{{{
+mvn install:install-file -DgroupId=org.python -DartifactId=jython-standalone -Dversion=2.5.1 -Dpackaging=jar -Dfile=/your/path/to/jython-standalone-2.5.1.jar -DpomFile=/your/path/to/pom.xml
+}}}
+
+And finally, pack the installed JAR with the POM into a bundle (this replaces the normal 'bundle-create' call:
+{{{
+mvn source:jar javadoc:jar package gpg:sign repository:bundle-pack -DgroupId=org.python -DartifactId=jython-standalone -Dversion=2.5.1
 }}}
 
 The bundle process fails to create !JavaDoc, but they are also missing from Sonatype's [https://oss.sonatype.org/content/groups/python/org/python/jython/2.5.0/ existing Jython artifact(s)].

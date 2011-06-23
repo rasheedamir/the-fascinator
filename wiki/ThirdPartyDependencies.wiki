@@ -66,6 +66,9 @@ Inside the `trunk` folder modify `pom.xml` to add the required elements for a So
 *Web page:* http://www.jython.org/<br/>
 *Used by:* Portal, Solr Indexer etc.<br/>
 *Build process:*<br/>
+Be forewarned, this process is not painless. The Standalone JAR is only available via the install process (ie. cannot be built directly) but does not include source or JavaDoc JARs (ie. must be built directly).
+
+==== Installing the base JAR ===
 Follow the [http://wiki.python.org/jython/InstallationInstructions installation instructions] for Jython 2.5.1 in 'Standalone Mode'.
 
 I renamed the resulting JAR to `jython-standalone-2.5.1.jar`. Now you also need a POM to go with this JAR (same directory is fine): 

@@ -60,3 +60,70 @@ Inside the `trunk` folder modify `pom.xml` to add the required elements for a So
     </developers>
 }}}
 *Maven Central:* http://search.maven.org/#browse|-907833221
+
+=== Jython Standalone ===
+*Web page:* http://www.jython.org/<br/>
+*Used by:* Portal, Solr Indexer etc.<br/>
+*Build process:*<br/>
+Follow the [http://wiki.python.org/jython/InstallationInstructions installation instructions] for Jython 2.5.1 in 'Standalone Mode'.
+
+I renamed the resulting JAR to `jython-standalone-2.5.1.jar` and dropped this POM into the same directory: 
+{{{
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.python</groupId>
+    <artifactId>jython-standalone</artifactId>
+    <version>2.5.1</version>
+    <packaging>jar</packaging>
+
+    <name>Jythone Standalone 2.5.1</name>
+    <url>http://www.jython.org/</url>
+    <description>The Jython Standalone installation is a Jython JAR also containing all Python standard libraries. The JAR can be recreated by following the 'Standalone mode' installation instructions: http://wiki.python.org/jython/InstallationInstructions.</description>
+
+    <licenses>
+        <license>
+            <name>The Jython License</name>
+            <url>http://www.jython.org/license.html</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>http://hg.python.org/jython</url>
+        <connection>scm:hg:http://hg.python.org/jython</connection>
+    </scm>
+
+    <developers>
+        <developer>
+            <name>Various</name>
+            <url>http://wiki.python.org/jython/WhosDoingWhat</url>
+            <roles>
+                <role>Admin</role>
+                <role>Developer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <links>
+                        <value>http://java.sun.com/javase/6/docs/api/</value>
+                    </links>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
+
+</project>
+}}}
+
+The bundle process fails to create JavaDoc, but they are also missing from Sonatype's [https://oss.sonatype.org/content/groups/python/org/python/jython/2.5.0/ existing Jython artifact(s)].
+
+*Background Information:* I found [http://old.nabble.com/Please-deploy-version-2.5.2-to-Maven-repository-td31369024.html many] [http://old.nabble.com/Jython-2.5.1-missing-from-Maven-td26857910.html different] [http://old.nabble.com/2.5.1-Maven-Central-upload-td28037871.html#a28037871 requests] to have up-to-date versions of Jython artifacts hosted somewhere... they all appear to have been ignored. No mention of standalone JARs.
+
+*Maven Central:* TBA

@@ -3,7 +3,7 @@
 = Introduction =
 This list contains information on all current third party dependencies in use by The Fascinator. Developers who add new dependencies should try to keep this list up to date.
 
-For clarity, a 'third party' dependency is one that is not typically available via the standard Maven dependency mechanisms, so we need to create entries in a Maven repository somewhere (in this case Sonatype) in their behalf.
+For clarity, a 'third party' dependency is one that is not typically available via the standard Maven dependency mechanisms, so we need to create entries in a Maven repository somewhere (in this case Sonatype) on their behalf.
 
 == Build process ==
 Unless otherwise noted, the build process for each bundle simply follows the Sonatype documentation.

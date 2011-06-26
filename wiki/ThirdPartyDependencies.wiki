@@ -202,7 +202,7 @@ The bundle can be directly upload to Sonatype, no Maven executions required.
 *Web page:* http://www.jython.org/<br/>
 *Used by:* Portal<br/>
 *Build process:*<br/>
-Fairly simple after doing v2.5.1... no idea why we have two different version. Perhaps we should look into that?
+Fairly simple after doing v2.5.1... ~no idea why we have two different version. Perhaps we should look into that?~ _Greg: 2.5.2 was required for `threadLocalStateInterpreter()`, and I vaguely recall a conversation with Oliver about this. Something about memory leaks and/or non-thread-safe behaviour in v2.5.1 when Oliver was addresses the caching of Python objects in the Java layer._
 
 ==== Installing the base JAR ===
 Follow the [http://wiki.python.org/jython/InstallationInstructions installation instructions] for Jython 2.5.2 in 'Standalone Mode'.

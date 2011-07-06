@@ -1,0 +1,36 @@
+ ---
+ Example
+ ---
+ Duncan Dickinson
+ ---
+ 2010-08-11
+ ---
+
+Example Configuration
+
+ The code below displays a sample POM that will generate Java classes 
+ for the designated vocab. To generate the classes you would run: 
+
+--- 
+ mvn schemagen:rdf2go
+---
+<plugin>
+	<groupId>au.edu.usq.fascinator.maven-plugins</groupId>
+	<artifactId>schemagen</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+    <configuration>
+        <schema>
+            <DC>
+                http://purl.org/dc/elements/1.1/</DC>
+            <DCTERMS>
+                http://purl.org/dc/terms/</DCTERMS>
+            <BIBO>http://purl.org/ontology/bibo/</BIBO>
+            <SKOS>http://www.w3.org/TR/skos-reference/skos.rdf</SKOS>
+            <FOAF>http://xmlns.com/foaf/spec/</FOAF>
+        </schema>
+        <outputFolder>src/main/java/</outputFolder>
+        <packageName>au.edu.usq.fascinator.vocabulary</packageName>
+    </configuration>
+</plugin>
+---

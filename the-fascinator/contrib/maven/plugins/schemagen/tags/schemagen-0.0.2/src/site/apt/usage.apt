@@ -1,0 +1,45 @@
+ ---
+ Introduction
+ ---
+ Duncan Dickinson
+ ---
+ 2009-11-02
+ ---
+
+Usage
+
+ The schemagen plugin creates Java classes based on RDF schema. 
+ 
+ You can configure the plugin to access RDF Schema via 
+a URL.
+
+ Don't forget to change the plugin version as appropriate. Also check the 
+ {{{examples.html}Example POM}} for details about the plugin executions. 
+
+*A very basic URL example
+
+ This example loads the FOAF RDFS from its URL. 
+
+---
+...
+<build>
+    ...
+    <plugins>
+		<plugin>
+            <groupId>au.edu.usq.fascinator.maven-plugins</groupId>
+            <artifactId>schemagen</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+
+            <configuration>
+                <schema>
+                    <FOAF>http://xmlns.com/foaf/spec/</FOAF>
+                </schema>
+                <outputFolder>src/main/java/</outputFolder>
+                <packageName>au.edu.usq.fascinator.vocabulary</packageName>
+            </configuration>
+        </plugin>
+	...
+	</plugins>
+    ...
+</build>
+---

@@ -23,6 +23,9 @@ As per [https://sites.google.com/site/fascinatorhome/home/documentation/technica
 == Third Party Dependencies ==
 Any parts of the core platform that depend on external code libraries not currently available via Maven will need to uploaded to Sonatype. We maintain a list on [ThirdPartyDependencies a separate page]. This list should be kept up-to-date, so if you are adding a new dependency not only the the upload is required before you release, *but please update the list too*.
 
+== The Fascinator ==
+The core system will deploy as one large task, given that it is configured as a multi-module Maven project. There is a small 'gotcha' associated with this that is covered later (following the 'release:prepare' step).
+
 ----
 
 = How does deployment work? =
@@ -80,6 +83,8 @@ mvn release:perform
 The prepare step in particular will commit changes through subversion to migrate the current SNAPSHOT to a tagged release and roll forward the SNAPSHOT number on trunk. For this reason you shouldn't ever need to manually alter the version numbers in POMs; the release process will do this for you.
 
 A number of prompts will confirm details regarding the release and it is generally advised to leave this as is. You will also be prompted for you GPG passphrase during the release if you have one (generally a good idea).
+
+*Fascinator*: When deploy the core Fascinator you will run into a problem with releasing multi-module POMs, namely that some of the JARs won't build because their dependencies were never built. To workaround this, got to the '`target/checkout`' directory and run a '`tf rebuild`' to build the version you are about to release. Then re-run '`mvn release:perform`'.
 
 == Releasing Artifacts ==
 The public release is not completed yet, you've just released to Sonatype's staging repository, so you need to follow [https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide#SonatypeOSSMavenRepositoryUsageGuide-8.ReleaseIt Step 8] from their release guide, and:

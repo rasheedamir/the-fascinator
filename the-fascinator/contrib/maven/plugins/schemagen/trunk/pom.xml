@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.googlecode.the-fascinator.maven-plugins</groupId>
     <artifactId>schemagen</artifactId>
-    <version>0.0.3-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
     <name>Schemagen plugin</name>
     <parent>

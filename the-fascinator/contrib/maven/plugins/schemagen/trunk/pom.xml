@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.googlecode.the-fascinator.maven-plugins</groupId>
     <artifactId>schemagen</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.2</version>
     <packaging>maven-plugin</packaging>
     <name>Schemagen plugin</name>
     <parent>
@@ -35,9 +35,9 @@
     <description>This plugin can be used to generate a set of Java classes for accessing RDF via RDF2Go.</description>
     <url>http://fascinator.usq.edu.au/trac/wiki/tf2/contrib/maven/plugins/schemagen</url>
     <scm>
-        <url>http://the-fascinator.googlecode.com/svn/the-fascinator/contrib/maven/plugins/schemagen/</url>
-        <connection>scm:svn:http://the-fascinator.googlecode.com/svn/the-fascinator/contrib/maven/plugins/schemagen/</connection>
-        <developerConnection>scm:svn:https://the-fascinator.googlecode.com/svn/the-fascinator/contrib/maven/plugins/schemagen/</developerConnection>
+        <url>http://the-fascinator.googlecode.com/svn/the-fascinator/contrib/maven/plugins/schemagen/tags/schemagen-0.0.2</url>
+        <connection>scm:svn:http://the-fascinator.googlecode.com/svn/the-fascinator/contrib/maven/plugins/schemagen/tags/schemagen-0.0.2</connection>
+        <developerConnection>scm:svn:https://the-fascinator.googlecode.com/svn/the-fascinator/contrib/maven/plugins/schemagen/tags/schemagen-0.0.2</developerConnection>
     </scm>
     <build>
         <plugins>

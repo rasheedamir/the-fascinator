@@ -16,17 +16,17 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package au.edu.usq.fascinator.transformer.jsonVelocity;
+package com.googlecode.fascinator.transformer.jsonVelocity;
 
-import au.edu.usq.fascinator.api.PluginDescription;
-import au.edu.usq.fascinator.api.PluginException;
-import au.edu.usq.fascinator.api.storage.DigitalObject;
-import au.edu.usq.fascinator.api.storage.Payload;
-import au.edu.usq.fascinator.api.storage.StorageException;
-import au.edu.usq.fascinator.api.transformer.Transformer;
-import au.edu.usq.fascinator.api.transformer.TransformerException;
-import au.edu.usq.fascinator.common.JsonSimple;
-import au.edu.usq.fascinator.common.JsonSimpleConfig;
+import com.googlecode.fascinator.api.PluginDescription;
+import com.googlecode.fascinator.api.PluginException;
+import com.googlecode.fascinator.api.storage.DigitalObject;
+import com.googlecode.fascinator.api.storage.Payload;
+import com.googlecode.fascinator.api.storage.StorageException;
+import com.googlecode.fascinator.api.transformer.Transformer;
+import com.googlecode.fascinator.api.transformer.TransformerException;
+import com.googlecode.fascinator.common.JsonSimple;
+import com.googlecode.fascinator.common.JsonSimpleConfig;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -260,7 +260,7 @@ public class JsonVelocityTransformer implements Transformer {
                         "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
                 velocity.setProperty("directive.set.null.allowed", "true");
                 velocity.setProperty(Velocity.RUNTIME_LOG_LOGSYSTEM_CLASS,
-                    "au.edu.usq.fascinator.transformer.jsonVelocity.LoggingWrapper");
+                    "com.googlecode.fascinator.transformer.jsonVelocity.LoggingWrapper");
 
                 File templateDir = itemTemplates;
                 if (itemTemplates.isFile()) {

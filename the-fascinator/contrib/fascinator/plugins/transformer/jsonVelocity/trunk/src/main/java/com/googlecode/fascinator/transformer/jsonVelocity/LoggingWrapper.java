@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package au.edu.usq.fascinator.transformer.jsonVelocity;
+package com.googlecode.fascinator.transformer.jsonVelocity;
 
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.runtime.RuntimeServices;

@@ -1,8 +1,8 @@
-package au.edu.usq.fascinator.transformer.jsonVelocity;
+package com.googlecode.fascinator.transformer.jsonVelocity;
 
-import au.edu.usq.fascinator.api.storage.DigitalObject;
-import au.edu.usq.fascinator.api.storage.StorageException;
-import au.edu.usq.fascinator.common.JsonSimple;
+import com.googlecode.fascinator.api.storage.DigitalObject;
+import com.googlecode.fascinator.api.storage.StorageException;
+import com.googlecode.fascinator.common.JsonSimple;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;

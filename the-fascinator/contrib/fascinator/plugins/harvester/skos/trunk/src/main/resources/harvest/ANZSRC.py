@@ -1,7 +1,7 @@
 import time
 from org.semanticdesktop.aperture.rdf.impl import RDFContainerImpl
-from au.edu.usq.fascinator.vocabulary import SKOS
-from au.edu.usq.fascinator.vocabulary import DCTERMS
+from com.googlecode.fascinator.vocabulary import SKOS
+from com.googlecode.fascinator.vocabulary import DCTERMS
 from org.ontoware.rdf2go.model.node import Variable
 from org.ontoware.rdf2go.model.node.impl import URIImpl
 

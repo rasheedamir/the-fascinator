@@ -16,17 +16,17 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package au.edu.usq.fascinator.harvester.skos;
+package com.googlecode.fascinator.harvester.skos;
 
-import au.edu.usq.fascinator.api.harvester.HarvesterException;
-import au.edu.usq.fascinator.api.storage.DigitalObject;
-import au.edu.usq.fascinator.api.storage.Payload;
-import au.edu.usq.fascinator.api.storage.Storage;
-import au.edu.usq.fascinator.api.storage.StorageException;
-import au.edu.usq.fascinator.common.JsonSimpleConfig;
-import au.edu.usq.fascinator.common.harvester.impl.GenericHarvester;
-import au.edu.usq.fascinator.common.storage.StorageUtils;
-import au.edu.usq.fascinator.vocabulary.SKOS;
+import com.googlecode.fascinator.api.harvester.HarvesterException;
+import com.googlecode.fascinator.api.storage.DigitalObject;
+import com.googlecode.fascinator.api.storage.Payload;
+import com.googlecode.fascinator.api.storage.Storage;
+import com.googlecode.fascinator.api.storage.StorageException;
+import com.googlecode.fascinator.common.JsonSimpleConfig;
+import com.googlecode.fascinator.common.harvester.impl.GenericHarvester;
+import com.googlecode.fascinator.common.storage.StorageUtils;
+import com.googlecode.fascinator.vocabulary.SKOS;
 
 import com.hp.hpl.jena.vocabulary.RDF;
 

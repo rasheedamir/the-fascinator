@@ -1,0 +1,10 @@
+{
+    "harvester": {
+        "type": "skos",
+        "skos": {
+            "baseFile": "${test.dir}/for08-subset.rdf",
+            "baseUri": "http://purl.org/asc/1297.0/2008/for/",
+            "rootNode": "anzsrc/for"
+        }
+    }
+}

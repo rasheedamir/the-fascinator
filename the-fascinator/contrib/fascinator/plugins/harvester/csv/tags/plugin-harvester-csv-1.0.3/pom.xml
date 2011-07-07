@@ -1,0 +1,45 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.googlecode.the-fascinator.plugins</groupId>
+    <artifactId>plugin-harvester-csv</artifactId>
+    <version>1.0.3</version>
+    <name>Fascinator - Plugin - Harvester - CSV</name>
+    <parent>
+        <artifactId>organisation</artifactId>
+        <groupId>com.googlecode.the-fascinator</groupId>
+        <version>1.0.2</version>
+    </parent>
+    <properties>
+        <fascinator.version>1.0.3</fascinator.version>
+    </properties>
+    <scm>
+        <url>http://the-fascinator.googlecode.com/svn/the-fascinator/contrib/fascinator/plugins/harvester/csv/tags/plugin-harvester-csv-1.0.3</url>
+        <connection>scm:svn:https://the-fascinator.googlecode.com/svn/the-fascinator/contrib/fascinator/plugins/harvester/csv/tags/plugin-harvester-csv-1.0.3</connection>
+        <developerConnection>scm:svn:https://the-fascinator.googlecode.com/svn/the-fascinator/contrib/fascinator/plugins/harvester/csv/tags/plugin-harvester-csv-1.0.3</developerConnection>
+    </scm>
+   
+    <dependencies>
+        <dependency>
+            <groupId>com.googlecode.the-fascinator</groupId>
+            <artifactId>fascinator-common</artifactId>
+            <version>${fascinator.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.the-fascinator.plugins</groupId>
+            <artifactId>plugin-storage-ram</artifactId>
+            <version>${fascinator.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>

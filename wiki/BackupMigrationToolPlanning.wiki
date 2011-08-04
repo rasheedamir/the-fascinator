@@ -1,0 +1,11 @@
+#summary A planning document for a Backup/Migration tool
+= Introduction =
+I'm starting to look at building a tool similar to the !HarvestClient (in that it can be run outside of the server) that would grab a backed up storage directory/plugin and rebuild a system on top of it. There are some old skeletons in Fascinator's closet that will cause problems here depending on the scope however, so I thought I'd put together some thoughts on how to proceed.
+
+= Background =
+This is issue has [https://fascinator.usq.edu.au/trac/wiki/tf2/DeveloperNotes/investigations/BackupRestore come up before], and it was very messy then as well. Mostly it was messy because there are several feature requests converging here that muddy the waters, such as replication, synchronization and migration between multiple instances of The Fascinator that are running at the same time.
+
+The reality however at this stage, is that all deployed instances of the Fascinator (that I am aware of) do not make use of this sort of functionality... it was all design work to build towards future ideas.
+
+=== Problem 1: Object ID generation ===
+The Storage API allows you to use

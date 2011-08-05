@@ -44,4 +44,37 @@ Next you need to resolve these harvest files to the new server's harvest files o
 
 From there you can start migrating and altering all of the other objects in Storage to point to the new harvest files before they get indexed.
 
-_A possible alternative is to simply ingest and index the entire storage layer into a staging index, and find the harvest files (and groups of associated objects) via the index. Then you can migrate to your real index as required. This might be a better solution for migrations across wildly different application versions._
+_A possible alternative is to simply ingest and index the entire storage layer into a staging index, and find the harvest files (and groups of associated objects) via the index. Then you can migrate to your real index as required. This might be a better solution for migrations across wildly different application versions, or when choosing to deprecate certain data sources, since you could do this as a two stage process with user input in the middle._
+
+=== Problem 4: Plugin/Version Compatibility ===
+This is a longer term consideration, but some sort of thought needs to be given to how you would handle a migration across different versions of the Storage API and/or data model and/or Storage Plugins changing entirely (such as switching to Fedora).
+
+= Proposal =
+Before receiving any feedback, here's my thoughts on the way forward:
+
+=== Stage 1: Trivial backup/restore ===
+This stage focuses on the tool being able to rebuild a system on the same server, with the same name, on the same path. It would expect to have all OIDs be the same both before and after the process and no migration work would be undertaken.
+
+Possibly it could accommodate minor migration work as a manual process to accompany the execution afterwards, but it would not be part of the automated tool.
+
+This tool would be executed from the command, similar to the !HarvestClient, but it would expect the server to be running to provide message and indexing services... just like the !HarvestClient does now.
+
+The basic process would be something like:
+ * Unpack and install the server using identical configuration.
+ * Copy the Storage directory to be in the correct location.
+ * Start the server, and visit the home page to ensure it is running correctly (it will look empty).
+ * Execute the restore tool to populate your Solr index and security model.
+
+Note, that the last point highlights the issue of security. For some systems this won't matter, eg. Mint/ReDBox derive all security data from workflows (in the harvest files) and the re-index process will rebuild an entirely accurate security model. Some systems that allow manual administration of security will need to also backup their security datastore... but this should just be an issue of appropriate documentation on a per-system basis.
+
+=== Stage 2: Solve OID Issues ===
+Modify the Fascinator core to allow the default OID algorithm to be overridden on a system-wide basis, in addition to the current accommodation for each data source.
+
+This would allow individual implementations to specify some way to ensure harvest files generate consistent OIDs no matter which server/environment they are housed in.
+
+This will resolve the more annoying problems involved in a system migration, but still hasn't addessed huge migrations where underlying APIs might change. The tool should probably execute almost identically to Stage 1.
+
+=== Stage 3: Version/Plugin Migrations ===
+This would ideally be the final version of the tool, solving the complication migration issues associated with the APIs themselves changing. The 'tool' would have to split into two tools joined by scripts and processes.
+
+I've got a few different ideas for how this could be done, but a lot of detailed planning isn't particularly useful at this stage, since it is a fair way off.

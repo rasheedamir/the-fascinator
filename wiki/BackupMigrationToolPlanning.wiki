@@ -8,7 +8,13 @@ This is issue has [https://fascinator.usq.edu.au/trac/wiki/tf2/DeveloperNotes/in
 The reality however at this stage, is that all deployed instances of the Fascinator (that I am aware of) do not make use of this sort of functionality... it was all design work to build towards future ideas.
 
 === Problem 1: No Solr Index ===
-Existing in-system scripts that re-index or re-harvest the entire system are a critical flaw. The rely on the existence of the Solr index to return a list of OIDs that are stored in the system.
+Existing in-system scripts that re-index or re-harvest the entire system are critically flawed. They rely on the existence of the Solr index to return a list of OIDs that are stored in the system.
+
+This can causes problem not during a backup, but sometimes when and index event fails because you are working on the python script invovled you are suddenly left with an orphan record in storage that is invisible to the user interface.
+
+The Solr index has always been the preferred option simply because it allows the process to proceed in an efficient fashion, paging through page after page of search results. The only alternative is avoided inside the system because the Storage API exposes a general '`getObjectIdList()`', but is primitive and tries to return a list of every ID in storage inside a single Object. This solution will not scale to large datasets without causing significant memory problems.
+
+However, '`getObjectIdList()`' is the only choice at this stage for a storage based restore, simply because the Solr index does not exist.
 
 === Problem 2: Object ID Generation ===
 The Storage API allows you to use any object ID you desire, but most harvester make use of a common utility library provided by the system core which takes several strings and hashes them together:

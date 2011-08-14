@@ -10,4 +10,4 @@ A textual summary/description of the release goes here... currently just bug fix
 
  * Work on logging frameworks to address bugs caused by Solr version upgrade.
  * Minor improvement to File System Storage Plugin when it finds objects without an 'objectId' property. Needs further work (issue #48).
- * Implement [http://code.google.com/p/the-fascinator/wiki/BackupMigrationToolPlanning Stage 1 of re-index/restore] tool.
+ * Implement [BackupMigrationToolPlanning Stage 1 of re-index/restore] tool.

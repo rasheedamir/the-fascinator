@@ -1,0 +1,87 @@
+#summary Details on the current release and all historic releases.
+
+= Current Version: v1.0.3 =
+
+This release was concerned with migrating to new build/release infrastructure. Upgrading to v3.3.0 of Solr was required as part of this and some associated changes resulted.
+
+*Release Date:* 06 July 2011
+
+*Release Notes:*
+
+ * Several non-core plugins moved from trunk to 'contrib' branch.
+ * Maven repository references to USQ infrastructure removed and linked to Sonatype.
+ * Package names across the project altered to match Maven group IDs (using 'googlecode' domain).
+ * Solr v3.3.0 version upgrade.
+ * Updates to indexing and sorting is a few locations in response to Solr v3.3.0 not allowing sorting on multi-valued fields.
+ * Fixed packaging bugs and improved logging on search and organiser screen.
+ * Addressed some deprecated practices causing log bloat.
+
+----
+= v1.0.2 =
+
+Aside from some minor bug fixes, this release was mostly to cover the code migration to Google Code and some related alterations to POMs.
+
+*Release Date:* 05 May 2011
+
+----
+= Pre-migration =
+
+There were numerous releases performed prior to our migration to Google Code. Those releases, and associated tickets are documented on USQ infrastructure (for now).
+
+Links and a brief summary are provided below:
+
+ * [https://fascinator.usq.edu.au/trac/wiki/tf2/Version1.0.1 v1.0.1]:
+   * Overhaul and improvement of OAI feeds against a variety of less common scenarios.
+   * Minor bug fixes and improvements.
+ * [https://fascinator.usq.edu.au/trac/wiki/tf2/Version1.0.0 v1.0.0]:
+   * Significant optimizations to Jython Caching in Portal.
+   * Implement form based workflow to ingest metadata and data together.
+   * Minor bug fixes and improvements.
+ * [https://fascinator.usq.edu.au/trac/wiki/tf2/Version0.7.5 v0.7.5]:
+   * Most areas of the codebase migrated to the new JSON Library.
+   * Upgrade jQuery to v1.4.4.
+   * Minor bug fixes and improvements.
+ * [https://fascinator.usq.edu.au/trac/wiki/tf2/Version0.7.4 v0.7.4]:
+   * New JSON Library implemented.
+   * Minor bug fixes and improvements.
+ * [https://fascinator.usq.edu.au/trac/wiki/tf2/Version0.7.3 v0.7.3]:
+   * The Solr indexer now uses POST instead of GET to support long queries.
+   * Added HTTP byte range support to enable HTML5 video streaming .
+   * Improved Storage API to enable support for retrieving the last modified date and size of payloads.
+   * Additional opens for third party security integration.
+   * Added sorting options for search results page.
+   * Minor bug fixes and improvements.
+ * [https://fascinator.usq.edu.au/trac/wiki/tf2/Version0.7.2 v0.7.2]:
+   * Several minor bug fixes and improvements.
+   * This release was mainly to support downstream projects.
+ * [https://fascinator.usq.edu.au/trac/wiki/tf2/Version0.7.1 v0.7.1]:
+   * Fixed caching bug causing performance and memory issues.
+   * Minor bug fixes and improvements.
+ * [https://fascinator.usq.edu.au/trac/wiki/tf2/Version0.7.0 v0.7.0]:
+   * New display template framework implemented.
+   * Solr indexing optimized.
+   * New Subscriber Plugin API added with logging implementation as first example.
+   * Third party security integration now possible with trust tokens. 
+   * Embedded media player switched to FlowPlayer.
+   * Security model now allows exceptions for individual users.
+   * A new Tapestry service added offering generic database access.
+   * Numerous bug fixes and minor improvements.
+ * [https://fascinator.usq.edu.au/trac/wiki/tf2/Version0.6.0 v0.6.0]:
+   * Optimizations to packaging and tool chains.
+   * Overhaul of the branding to improve flexibility.
+   * A new SSO interface and performance boost to security plugins.
+ * [https://fascinator.usq.edu.au/trac/wiki/tf2/Version0.5.0 v0.5.0]:
+   * New security model and workflow system implemented.
+   * A new transformer for handling media files implemented.
+   * Integration of a new annotation library for media fragment annotation and geospatial annotation.
+   * Storage API re-factored and improved.
+ * [https://fascinator.usq.edu.au/trac/wiki/tf2/Version0.4.0 v0.4.0]:
+   * New integration with ePub, IMS and Sword.
+   * Work on message queues for automated ingest.
+ * [https://fascinator.usq.edu.au/trac/wiki/tf2/Version0.3.0 v0.3.0]:
+   * Layout of Portal altered.
+   * Maven POM structures improved.
+ * [https://fascinator.usq.edu.au/trac/wiki/tf2/Version0.2.0 v0.2.0]:
+   * Additional transformers developed.
+ * [https://fascinator.usq.edu.au/trac/wiki/tf2/Version0.1.0 v0.1.0]:
+   * Initial development build.

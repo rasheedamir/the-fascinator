@@ -12,18 +12,160 @@ First, some brief information about the libraries in question:
  * [http://logback.qos.ch/ Logback]: is the successor to log4j and is the native implementation of SLF4J (all three projects have the [http://en.wikipedia.org/wiki/Ceki_G%C3%BClc%C3%BC same founder]). This is The Fascinator's logging implementation of choice.
 
 == All Roads Lead to Logback ==
-The biggest challenge faced when bringing together a wide variety of JARs and WARS to make a single application server is that they all bring their own dependencies to the table.
+The biggest challenge faced when bringing together a wide variety of JARs and WARS to make a single application server is that they all bring their own dependencies to the table. We need to route all of this logging activity into a single framework if we want to see log entries from every part of the code.
 
 In the [http://ant.apache.org/ olden days] you'd distribute you applications with specifically chosen JARs and WARs that you could modify to your hearts content to ensure that they all played nicely together.
 
 [http://maven.apache.org/ These days] of course, we don't want to go carting around binary JAR files with each piece of software, but it also means that there is a lot of legacy code out there that just assumes if you don't want to do things their way you will manually hack the JARs/WARs apart yourself. We need some solutions for this, and thankfully we mostly have them (below).
 
 === Logging Bridges ===
-Before we go into gory details however... what are we actually trying to achieve? Logging bridges 
+Before we go into gory details however... what are we actually trying to achieve? Well first we need to remove all references to logging frameworks we don't want on our classpath and replace them with logging bridges.
+
+These bridges are valid implementations of each framework, but they have all their real logging gutted and redirect to SLF4J, and from there it all goes to logback.
+
+This lets us provide a single point of configuration for the entire application (in theory).
+
+The bridges themselves are easy, since we just add them as a dependency at the top level of the application:
+{{{
+<dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>slf4j-api</artifactId>
+    <version>1.6.1</version>
+</dependency>
+<dependency>
+    <groupId>ch.qos.logback</groupId>
+    <artifactId>logback-core</artifactId>
+    <version>0.9.29</version>
+</dependency>
+<dependency>
+    <groupId>ch.qos.logback</groupId>
+    <artifactId>logback-classic</artifactId>
+    <version>0.9.29</version>
+</dependency>
+<dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>jcl-over-slf4j</artifactId>
+    <version>1.6.1</version>
+</dependency>
+<dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>log4j-over-slf4j</artifactId>
+    <version>1.6.1</version>
+</dependency>
+}}}
+
+So this config gets us the SLF4J API (but not an implementation), followed by the two logback JARs (our implementation) and bridges for JCL (`jcl-over-slf4j`) and log4j (`log4j-over-slf4j`) logging.
 
 === Excluding Dependencies ===
+More annoying then the bridges however, is the need to remove other logging implementations from the classpath. If we leave commons logging JARs sitting around we can't be sure that the Java class loader will find our bridge JAR over the commons logging one.
+
+==== The Easy Way ====
+The easiest way to avoid bringing in these JARs is with some top-level declarations for the project indicating that these JARs will provided, like so:
+{{{
+<dependency>
+  <groupId>commons-logging</groupId>
+  <artifactId>commons-logging</artifactId>
+  <version>1.1.1</version>
+  <scope>provided</scope>
+</dependency>
+}}}
+
+So when Maven goes to resolve the commons-logging dependency for any lower POMs it will already have a reference telling it that it doesn't need to go get this JAR.
+
+==== The Slow Way ====
+Alternative to this, you can also exclude a dependency from being loaded when you go to load a library, like so:
+{{{
+<dependency>
+    <groupId>commons-httpclient</groupId>
+    <artifactId>commons-httpclient</artifactId>
+    <exclusions>
+        <exclusion>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+        </exclusion>
+    </exclusions>
+</dependency>
+}}}
+
+Here we are saying that we do need the Commons HTTP library, but we don't want it to fetch the commons-logging JAR on which HTTP depends. At runtime, we expect it will instead make use of our jcl-over-slf4j bridge.
+
+Why would you do it this way? I touch on this a little further in 'Multi-module Projects' below, but I was also somewhat attracted to the idea that it encapsulated the configuration in the locations that necessitated its inclusion (ie. we are not just excluding commons-logging, we excluding it because library XYZ is trying to bring it in) and it also forces awareness of where the logging 'plumbing' is going throughout the application.
+
+That all said, I'm constantly arguing with myself over this, and could be convinced that 'easier is better' if enough people agree.
 
 === How to 'Un-Bundle' a WAR ===
+This problem is somewhat trickier. A good example is Solr (v3.3.0 at time of writing) which is distributed as a WAR file containing all dependencies (including slf4j-jdk14, the JDK implementation of SLF4J).
 
+Before we addressed our logging problems we would deploy the Solr WAR directly to Jetty and letting nature run its course:
+{{{
+<dependency>
+    <groupId>org.apache.solr</groupId>
+    <artifactId>solr</artifactId>
+    <type>war</type>
+    <version>3.3.0</version>
+</dependency>
+...
+<plugin>
+    <artifactId>maven-dependency-plugin</artifactId>
+    <version>2.1</version>
+    <executions>
+        <execution>
+            <id>copy-webapp</id>
+            <phase>package</phase>
+            <goals>
+                <goal>copy</goal>
+            </goals>
+            <configuration>
+                <outputDirectory>${dir.server}/webapps</outputDirectory>
+                <artifactItems>
+                    <artifactItem>
+                        <groupId>org.apache.solr</groupId>
+                        <artifactId>solr</artifactId>
+                        <type>war</type>
+                    </artifactItem>
+                </artifactItems>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+}}}
+
+This 'solution' of course, we leaving the WAR sitting on the classpath, and the JDK JAR would get found and continually throw warnings in logs. On some systems it would even go further, because the Java class loader found this JAR first and diverted our logging away from logback. Mucho Bad.
+
+We instead shifted to unpacking the WAR and leaving a '`/solr`' directory in the same location (replace the '`<execution>`' node from above):
+{{{
+        <execution>
+            <id>unpack-solr-war</id>
+            <phase>package</phase>
+            <goals>
+                <goal>unpack</goal>
+            </goals>
+            <configuration>
+                <!-- Make sure we don't unpack the bundled logging JAR.
+                     Fascinator will provide logback instead. -->
+                <excludes>WEB-INF/lib/slf4j-jdk14-1.6.1.jar</excludes>
+                <outputDirectory>${dir.server}/webapps/solr</outputDirectory>
+                <artifactItems>
+                    <artifactItem>
+                        <groupId>org.apache.solr</groupId>
+                        <artifactId>solr</artifactId>
+                        <type>war</type>
+                    </artifactItem>
+                </artifactItems>
+            </configuration>
+        </execution>
+}}}
+
+The line of particular import is here:
+{{{
+<excludes>WEB-INF/lib/slf4j-jdk14-1.6.1.jar</excludes>
+}}}
+Where we told Maven to exclude that one JAR during the unpack process, thus removing it from the classpath.
+
+== Multi-module Projects ==
+
+== Tiered Configuration ==
+
+== Debugging ==
 
 == Outstanding Problems ==

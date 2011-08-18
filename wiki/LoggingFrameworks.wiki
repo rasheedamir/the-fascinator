@@ -156,7 +156,7 @@ We instead shifted to unpacking the WAR and leaving a '`/solr`' directory in the
         </execution>
 }}}
 
-The line of particular import is here:
+The line of particular important is here:
 {{{
 <excludes>WEB-INF/lib/slf4j-jdk14-1.6.1.jar</excludes>
 }}}

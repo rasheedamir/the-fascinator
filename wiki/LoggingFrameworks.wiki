@@ -1,0 +1,29 @@
+#summary Detailed information on application logging frameworks, dependencies and configuration.
+
+= Introduction =
+Java logging gives me a considerable headache. This page is an attempt to provide detailed information on The Fascinator's use of the various logging libraries available, and how the end-user can make use of it all.
+
+Some of the 'opinions' below are unsupported by references, but represent a considerable amount of practical usage and research into logging solutions. If you opinions differ, [http://groups.google.com/group/the-fascinator-dev please let us know], and help us make the software even better.
+
+First, some brief information about the libraries in question:
+ * [http://logging.apache.org/log4j/1.2/ Log4j]: Ye 'olde popular logging framework. Historical predecessor to logback, but many libraries still use it, including of course, older versions of libraries that have now migrated away.
+ * [http://commons.apache.org/logging/ JCL]: Jakarta Commons Logging, now known as Apache Commons Logging, or more frequently, just 'commons logging' or JCL. This is a wrapper for other frameworks, such as log4j. It has mostly (broad generalisation) fallen out of favour amongst developers to make way for the more modern SLF4J. Again though, it is still in fairly broad use amongst code libraries.
+ * [http://www.slf4j.org/ SLF4J]: The Simple Logging Facade for Java; similar to JCL it is a wrapper for other logging implementations, although the project does make available several viable implementations, such as the core JDK implementation and several bridges (detailed later). It is very popular, and considered to be more efficient and robust then most alternatives.
+ * [http://logback.qos.ch/ Logback]: is the successor to log4j and is the native implementation of SLF4J (all three projects have the [http://en.wikipedia.org/wiki/Ceki_G%C3%BClc%C3%BC same founder]). This is The Fascinator's logging implementation of choice.
+
+== All Roads Lead to Logback ==
+The biggest challenge faced when bringing together a wide variety of JARs and WARS to make a single application server is that they all bring their own dependencies to the table.
+
+In the [http://ant.apache.org/ olden days] you'd distribute you applications with specifically chosen JARs and WARs that you could modify to your hearts content to ensure that they all played nicely together.
+
+[http://maven.apache.org/ These days] of course, we don't want to go carting around binary JAR files with each piece of software, but it also means that there is a lot of legacy code out there that just assumes if you don't want to do things their way you will manually hack the JARs/WARs apart yourself. We need some solutions for this, and thankfully we mostly have them (below).
+
+=== Logging Bridges ===
+Before we go into gory details however... what are we actually trying to achieve? Logging bridges 
+
+=== Excluding Dependencies ===
+
+=== How to 'Un-Bundle' a WAR ===
+
+
+== Outstanding Problems ==

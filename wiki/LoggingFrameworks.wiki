@@ -274,7 +274,7 @@ The net result is that you want to have some idea of where the logging JARs are 
 }}}
 
 And from there you can return to the earlier suggestions on how to deal with them. ie. In this case we'd need to:
- * exclude the '`log4j`' JAR from loading the '`solr-solrj`' dependency.
+ * exclude the '`log4j`' JAR when loading the '`solr-solrj`' dependency.
  * exclude the '`slf4j-jdk14`' JAR and '`commons-logging`' when loading the '`solr-core`' dependency.
  * Depending one where the implementation will be in your application is might be worth adding '`log4j-over-slf4j`' and '`jcl-over-slf4j`' bridges to this project to replace '`log4j`' and '`commons-logging`'.
  * The '`slf4j-api`' JAR is fine, and the '`logback`' JARs... although it is worth checking versions as well and deciding whether you want to be explicit, or let Maven handle version clashes (I leave it to Maven, unless it is causing a problem).

@@ -216,8 +216,7 @@ It will evaluate all dependencies for your project, back through each dependency
 [INFO] |  +- org.apache.lucene:lucene-spellchecker:jar:3.3.0:compile
 [INFO] |  +- org.apache.lucene:lucene-grouping:jar:3.3.0:compile
 [INFO] |  +- org.apache.solr:solr-commons-csv:jar:3.3.0:compile
-[INFO] |  +- org.apache.geronimo.specs:geronimo-stax-api_1.0_spec:jar:1.0.1:comp
-ile
+[INFO] |  +- org.apache.geronimo.specs:geronimo-stax-api_1.0_spec:jar:1.0.1:compile
 [INFO] |  +- commons-codec:commons-codec:jar:1.4:compile
 [INFO] |  +- commons-fileupload:commons-fileupload:jar:1.2.1:compile
 [INFO] |  +- commons-httpclient:commons-httpclient:jar:3.1:compile

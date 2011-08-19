@@ -4,7 +4,7 @@
 
 A textual summary/description of the release goes here... currently just bug fixes/tweaks.
 
-*Release Date:* TBA
+*Release Date:* TBA... see [ReleaseHistory earlier releases].
 
 *Release Notes:* (so far... this version is unreleased)
 

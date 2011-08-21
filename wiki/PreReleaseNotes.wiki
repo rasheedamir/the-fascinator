@@ -10,6 +10,7 @@ This release focuses on significant updates to the [LoggingFrameworks logging fr
 
 *Release Notes:* (so far... this version is unreleased)
 
+ * !FileSystemHarvester's new database cache has been added to developer purge scripts. (issue #6)
  * Fixed an occasional number parsing error in House Keeping. (issue #8).
  * Some work-around fixes to OAI-PMH harvest problems added to sample rules file. More work is required in the harvester (issue #49).
  * Fixed threading bug in file lock unit test. (issue #28)

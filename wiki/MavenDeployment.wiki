@@ -86,6 +86,11 @@ A number of prompts will confirm details regarding the release and it is general
 
 *Fascinator*: When deploy the core Fascinator you will run into a problem with releasing multi-module POMs, namely that some of the JARs won't build because their dependencies were never built. To workaround this, got to the '`target/checkout`' directory and run a '`tf rebuild`' to build the version you are about to release. Then re-run '`mvn release:perform`'.
 
+*Another problem*: Depending on your system's default JVM configuration you may run into memory issues during the Maven release process. Try setting this environment variable at the beginning to alleviate problems:
+{{{
+set MAVEN_OPTS=-XX:MaxPermSize=128m -Xmx512m
+}}}
+
 == Releasing Artifacts ==
 The public release is not completed yet, you've just released to Sonatype's staging repository, so you need to follow [https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide#SonatypeOSSMavenRepositoryUsageGuide-8.ReleaseIt Step 8] from their release guide, and:
  # close the [https://oss.sonatype.org/index.html#stagingRepositories staging repository].

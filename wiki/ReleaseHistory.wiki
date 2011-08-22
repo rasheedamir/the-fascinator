@@ -1,6 +1,26 @@
 #summary Details on the current release and all historic releases.
 
-= Current Version: v1.0.3 =
+= Current Release v1.0.4 =
+
+This release focuses on significant updates to the [LoggingFrameworks logging framework] 'plumbing' throughout the platform. There are also a number of bug fixes and the test release of a new restoration process.
+
+*Release Date:* 22 August 2011
+
+*Release Notes:*
+
+ * Work on [LoggingFrameworks logging frameworks] to address bugs caused by Solr version upgrade.
+ * Solr Indexer now binds access to the '`log`' object to the Jython engine, making it accessible inside of rules files. (issue #43)
+ * Implement [BackupMigrationToolPlanning Stage 1 of re-index/restore] tool. (issue #46)
+ * Minor improvement to File System Storage Plugin when it finds objects without an 'objectId' property. Needs further work (issue #48), this 'fix' is just a workaround.
+ * !FileSystemHarvester's new database cache has been added to developer purge scripts. (issue #6)
+ * Fixed an occasional number parsing error in House Keeping. (issue #8).
+ * Some work-around fixes to OAI-PMH harvest problems added to sample rules file. More work is required in the harvester (issue #49).
+ * Fixed threading bug in file lock unit test. (issue #28)
+ * Improved several contrib plugins to allow the [https://redbox-build.cqu.edu.au/jenkins/ build server] to do automated documentation builds now that they are separated from the core Fascinator POMs.
+ * Fixed Atom Feed bugs resulting from code being out-of-date. (issue #50)
+
+----
+= v1.0.3 =
 
 This release was concerned with migrating to new build/release infrastructure. Upgrading to v3.3.0 of Solr was required as part of this and some associated changes resulted.
 

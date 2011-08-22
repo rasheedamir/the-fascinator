@@ -19,3 +19,4 @@ This release focuses on significant updates to the [LoggingFrameworks logging fr
  * Some work-around fixes to OAI-PMH harvest problems added to sample rules file. More work is required in the harvester (issue #49).
  * Fixed threading bug in file lock unit test. (issue #28)
  * Improved several contrib plugins to allow the [https://redbox-build.cqu.edu.au/jenkins/ build server] to do automated documentation builds now that they are separated from the core Fascinator POMs.
+ * Fixed Atom Feed bugs resulting from code being out-of-date. (issue #50)

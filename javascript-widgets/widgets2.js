@@ -317,14 +317,14 @@ var widgets={forms:[], globalObject:this};
           v="/^.{"+n+"}$/"; }
       else if(vl=="lengt" || vl=="lengthgt"){
           var n = getNumber();
-          if(isNaN(n)){ 
+          if(isNaN(n)){
             // Error
             return "";
           }
           v="/^.{"+(n+1)+",}$/"; }
       else if(vl=="lenlt" || vl=="lengthlt"){
           var n = getNumber();
-          if(isNaN(n)){ 
+          if(isNaN(n)){
             // Error
             return "";
           }
@@ -453,7 +453,7 @@ var widgets={forms:[], globalObject:this};
         });
         ctx.find(".validation-rules").each(function(c, v){
             v = $(v).text();
-            v.replace(reg3, function(){ 
+            v.replace(reg3, function(){
                 var v=arguments[4]; // from reg3 match
                 if(v)rule(v);
             });
@@ -1160,8 +1160,13 @@ var widgets={forms:[], globalObject:this};
                   $.each(j.list, function(c, i){
                       i.id=i[idKey];
                       i.label=i[labelKey];
-                      if(!$.isEmptyObject(i[childrenKey])){
-                          i.children=escape(escape(i.id));  // where should the double escaping happen?
+                      // Is it a data type that has children normally
+                      if (!$.isEmptyObject(i[childrenKey])) {
+                          // And does this instance actually have any children
+                          if (i[childrenKey].length != 0) {
+                              // where should the double escaping happen?
+                              i.children=escape(escape(i.id));
+                          }
                       }
                   });
                   j.list.sort(cmp);
@@ -1849,7 +1854,7 @@ var widgets={forms:[], globalObject:this};
         contentSetup($("body"), function(){
             $("."+formClassName).each(function(c, e){
                 try{
-                    var widgetForm=formWidget($(e), 
+                    var widgetForm=formWidget($(e),
                                             widgets.globalObject,
                                             widgets.validator);
                     widgets.forms.push(widgetForm);

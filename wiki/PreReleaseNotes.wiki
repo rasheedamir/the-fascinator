@@ -8,5 +8,6 @@ A textual summary/description of the release goes here... currently just bug fix
 
 *Release Notes:* (so far... this version is unreleased)
 
+ * Stage 2 [BackupMigrationToolPlanning restore tool] implemented (issue #10), allowing harvest file OID remapping and inclusion of custom migration scripts. (issue #57) Migration from one host to another should now be possible.
  * Object deletion is more robust when small sections error. r3064
  * ...

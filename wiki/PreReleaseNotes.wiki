@@ -14,4 +14,9 @@ A textual summary/description of the release goes here... currently just bug fix
  * Numerous minor fixes to 'about' pages. (issue #54, issue #55, issue #56)
  * Object deletion is more robust when small sections error. r3064
  * Some timing issues and bugs resolved in !SubscriberQueueConsumer. ID generation now uses [http://download.oracle.com/javase/6/docs/api/java/util/UUID.html UUIDs] r3080
- * ...
+ * Significant work on messaging: r3083
+   * Some core messaging features previously in the Portal having been centralised to the Core Library. It is now possible to start AMQ without a Portal from inside unit tests.
+   * Message queue bootup delays at system start are no longer hardcoded. Servers with slow Solr boot times can accommodate.
+   * Some new experimental work on transaction management provides alternative to traditional tool chains. A new '`TransactionManager`' plugin supports this.
+   * '`MessagingServices`' should handle a lot of edge case errors to do with abnormally terminating sessions. It is also quite trivial now to send JMS messages to other systems as well. Both of these improvements are very new and need to be put through their paces.
+   * Message statistics can now be routed by configuration, and disabled if desired.

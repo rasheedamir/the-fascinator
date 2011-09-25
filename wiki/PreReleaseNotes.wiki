@@ -20,3 +20,4 @@ A textual summary/description of the release goes here... currently just bug fix
    * Some new experimental work on transaction management provides alternative to traditional tool chains. A new '`TransactionManager`' plugin supports this.
    * '`MessagingServices`' should handle a lot of edge case errors to do with abnormally terminating sessions. It is also quite trivial now to send JMS messages to other systems as well. Both of these improvements are very new and need to be put through their paces.
    * Message statistics can now be routed by configuration, and disabled if desired.
+ * Objects posting messages to the tool chain can now be configured regarding the specific queue to use. r3085

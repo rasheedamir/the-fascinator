@@ -138,11 +138,10 @@ var globalObject=this;
                 table.append($("<tr ><th>"+term+"</th><td>"+data[field]+"</td></tr>"));
             }
             addField("Title", "Honorific");
-            addField("Given Name");
-            addField("Family Name");
+            addField("Given_Name");
+            addField("Family_Name");
             addField("Email");
-            addField("Division");
-            addField("School");
+            addField("Description");
             detailDialog.append(table);
         }else{
             $.each(details, function(k, v){

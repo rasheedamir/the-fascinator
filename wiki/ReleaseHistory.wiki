@@ -1,6 +1,29 @@
 #summary Details on the current release and all historic releases.
 
-= Current Release v1.0.4 =
+= Current Release v1.0.5 =
+
+Major works on system messaging for robustness and improved functionality. The Solr Event Log Subscriber and the !ReIndex tool also got some long overdue tender loving care.
+
+*Release Date:* 04 October 2011
+
+*Release Notes:*
+
+ * Stage 2 [BackupMigrationToolPlanning restore tool] implemented (issue #10), allowing harvest file OID remapping and inclusion of custom migration scripts. (issue #57) Migration from one host to another should now be possible.
+ * Added new 'History' screen to display Solr log for object. r3071
+ * Solr logging configuration fixed. (issue #58)
+ * Numerous minor fixes to 'about' pages. (issue #54, issue #55, issue #56)
+ * Object deletion is more robust when small sections error. r3064
+ * Some timing issues and bugs resolved in !SubscriberQueueConsumer. ID generation now uses [http://download.oracle.com/javase/6/docs/api/java/util/UUID.html UUIDs] r3080
+ * Significant work on messaging: r3083
+   * Some core messaging features previously in the Portal having been centralised to the Core Library. It is now possible to start AMQ without a Portal from inside unit tests.
+   * Message queue bootup delays at system start are no longer hardcoded. Servers with slow Solr boot times can accommodate.
+   * Some new experimental work on transaction management provides alternative to traditional tool chains. A new '`TransactionManager`' plugin supports this.
+   * '`MessagingServices`' should handle a lot of edge case errors to do with abnormally terminating sessions. It is also quite trivial now to send JMS messages to other systems as well.
+   * Message statistics can now be routed by configuration, and disabled if desired.
+ * Objects posting messages to the tool chain can now be configured regarding the specific queue to use. r3085
+
+----
+= v1.0.4 =
 
 This release focuses on significant updates to the [LoggingFrameworks logging framework] 'plumbing' throughout the platform. There are also a number of bug fixes and the test release of a new restoration process.
 

@@ -28,7 +28,9 @@ import com.googlecode.fascinator.common.JsonSimpleConfig;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.rmi.RemoteException;
@@ -37,6 +39,7 @@ import java.util.Set;
 
 import org.apache.axis.types.NonNegativeInteger;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.IOUtils;
 import org.fcrepo.server.types.gen.FieldSearchQuery;
 import org.fcrepo.server.types.gen.FieldSearchResult;
 import org.fcrepo.server.types.gen.ListSession;
@@ -196,15 +199,16 @@ public class Fedora3Storage implements Storage {
         String templatePath = systemConfig.getString(null,
                 "storage", "fedora3", "foxmlTemplate");
         File templateFile = null;
+        boolean deleteTempFile = false;
         if (templatePath != null) {
             templateFile = new File(templatePath);
         } else {
-            URL url = getClass().getResource("/foxml_template.xml");
             try {
-                templateFile = new File(url.toURI());
-            } catch (URISyntaxException ex) {
+                templateFile = resourceToFile("foxml_template.xml");
+                deleteTempFile = true;
+            } catch (IOException ex) {
                 throw new StorageException("Error; Unable to read new object "
-                        + "template from disk: '" + url.getPath() + "'");
+                        + "template from JAR!", ex);
             }
         }
 
@@ -214,6 +218,9 @@ public class Fedora3Storage implements Storage {
                     + " provided does not exist: '" + templatePath + "'");
         }
         foxmlTemplate = fileToString(templateFile);
+        if (deleteTempFile) {
+            templateFile.delete();
+        }
         if (foxmlTemplate == null) {
             throw new StorageException("Error; Unable to read new object "
                     + "template from disk: '" + templatePath + "'");
@@ -419,6 +426,22 @@ public class Fedora3Storage implements Storage {
      */
     private String safeFedoraPid(String oid) {
         return Fedora3.namespace() + ":" + DigestUtils.md5Hex(oid);
+    }
+
+    /**
+     * Access a resource by name and stream the contents into a temp file.
+     * 
+     * @param resourceName The name of the resource (assumed to be on base path)
+     * @return File a temporary File containing the resource's data
+     */
+    private File resourceToFile(String resourcesName) throws IOException {
+        InputStream in = getClass().getResourceAsStream("/"+resourcesName);
+        File newFile = File.createTempFile("tempResource", "tmp");
+        FileOutputStream out = new FileOutputStream(newFile);
+        IOUtils.copy(in, out);
+        in.close();
+        out.close();
+        return newFile;
     }
 
     /**

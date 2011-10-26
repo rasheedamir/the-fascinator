@@ -2,7 +2,7 @@
     "storage": {
         "type": "fedora3",
         "fedora3": {
-            "url": "http://localhost:7070/fedora",
+            "url": "http://localhost:8888/fedora/",
             "username": "fedoraAdmin",
             "password": "fedoraAdmin"
         }

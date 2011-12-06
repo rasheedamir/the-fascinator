@@ -8,4 +8,5 @@ A textual summary/description of the release goes here... currently just bug fix
 
 *Release Notes:* (so far... this version is unreleased)
 
+ * Fixed bug in OAI-PMH Harvester's sample rules file, related to issue #49. r3122
  * A new 'Delete by Query' action has been added to the portal, allowing admins to script mass deletions somewhat easier. It is coded to run in 'test' mode only until edited by an admin... for safety reasons. r3123

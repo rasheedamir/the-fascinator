@@ -378,6 +378,7 @@ public class JsonVelocityTransformer implements Transformer {
 
         // Bind all the data we want in the template
         VelocityContext vc = new VelocityContext();
+        vc.put("systemConfig", systemConfig);
         vc.put("item", json);
         vc.put("util", util);
         vc.put("oid", in.getId());

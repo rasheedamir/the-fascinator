@@ -4,14 +4,14 @@
     <groupId>com.googlecode.the-fascinator.plugins</groupId>
     <artifactId>plugin-transformer-jsonVelocity</artifactId>
     <version>1.0.6-SNAPSHOT</version>
-    <name>JSON Velocity Transformer</name>
+    <name>Fascinator - Plugin - Transformer - JSON Velocity</name>
     <parent>
         <artifactId>organisation</artifactId>
         <groupId>com.googlecode.the-fascinator</groupId>
         <version>1.0.2</version>
     </parent>
     <properties>
-        <fascinator.version>1.0.5</fascinator.version>
+        <fascinator.version>1.0.6</fascinator.version>
     </properties>
     <dependencies>
         <dependency>

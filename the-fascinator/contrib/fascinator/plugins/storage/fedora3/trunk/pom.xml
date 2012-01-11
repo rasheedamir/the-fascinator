@@ -3,14 +3,14 @@
     <groupId>com.googlecode.the-fascinator.plugins</groupId>
     <artifactId>plugin-storage-fedora3</artifactId>
     <version>1.0.6-SNAPSHOT</version>
-    <name>The Fascinator - Plugin - Storage - Fedora Commons 3.x</name>
+    <name>Fascinator - Plugin - Storage - Fedora Commons 3.x</name>
     <parent>
         <artifactId>organisation</artifactId>
         <groupId>com.googlecode.the-fascinator</groupId>
         <version>1.0.2</version>
     </parent>
     <properties>
-        <fascinator.version>1.0.5</fascinator.version>
+        <fascinator.version>1.0.6</fascinator.version>
     </properties>
     <scm>
         <url>http://the-fascinator.googlecode.com/svn/the-fascinator/contrib/fascinator/plugins/storage/fedora3/trunk</url>

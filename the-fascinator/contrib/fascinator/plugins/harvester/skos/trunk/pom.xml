@@ -4,7 +4,7 @@
     <groupId>com.googlecode.the-fascinator.plugins</groupId>
     <artifactId>plugin-harvester-skos</artifactId>
     <version>1.0.6-SNAPSHOT</version>
-    <name>The Fascinator - Plugin - Harvester - SKOS</name>
+    <name>Fascinator - Plugin - Harvester - SKOS</name>
     <description>Performs a batch harvest of any SKOS Concept Shemes</description>
     <url>https://sites.google.com/site/fascinatorhome/home/documentation/technical/documents/common-library/plugins/harvester</url>
     <parent>
@@ -13,7 +13,7 @@
         <version>1.0.2</version>
     </parent>
     <properties>
-        <fascinator.version>1.0.5</fascinator.version>
+        <fascinator.version>1.0.6</fascinator.version>
     </properties>
     <dependencies>
         <dependency>

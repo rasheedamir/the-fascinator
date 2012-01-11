@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.googlecode.the-fascinator.plugins</groupId>
     <artifactId>plugin-storage-fedora3</artifactId>
-    <version>1.0.6</version>
+    <version>1.0.7-SNAPSHOT</version>
     <name>Fascinator - Plugin - Storage - Fedora Commons 3.x</name>
     <parent>
         <artifactId>organisation</artifactId>
@@ -13,9 +13,9 @@
         <fascinator.version>1.0.6</fascinator.version>
     </properties>
     <scm>
-        <url>http://the-fascinator.googlecode.com/svn/the-fascinator/contrib/fascinator/plugins/storage/fedora3/tags/plugin-storage-fedora3-1.0.6</url>
-        <connection>scm:svn:https://the-fascinator.googlecode.com/svn/the-fascinator/contrib/fascinator/plugins/storage/fedora3/tags/plugin-storage-fedora3-1.0.6</connection>
-        <developerConnection>scm:svn:https://the-fascinator.googlecode.com/svn/the-fascinator/contrib/fascinator/plugins/storage/fedora3/tags/plugin-storage-fedora3-1.0.6</developerConnection>
+        <url>http://the-fascinator.googlecode.com/svn/the-fascinator/contrib/fascinator/plugins/storage/fedora3/trunk</url>
+        <connection>scm:svn:https://the-fascinator.googlecode.com/svn/the-fascinator/contrib/fascinator/plugins/storage/fedora3/trunk</connection>
+        <developerConnection>scm:svn:https://the-fascinator.googlecode.com/svn/the-fascinator/contrib/fascinator/plugins/storage/fedora3/trunk</developerConnection>
     </scm>
     <dependencies>
         <dependency>

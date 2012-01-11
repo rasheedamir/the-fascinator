@@ -1,6 +1,17 @@
 #summary Details on the current release and all historic releases.
 
-= Current Release v1.0.5 =
+= Current Release v1.0.6 =
+
+Minor release primarily in support of projects deployed on the platform.
+
+*Release Date:* 11 January 2012
+
+ * Fixed bug in OAI-PMH Harvester's sample rules file, related to issue #49. r3122
+ * A new 'Delete by Query' action has been added to the portal, allowing admins to script mass deletions somewhat easier. It is coded to run in 'test' mode only until edited by an admin... for safety reasons. r3123
+ * !JsonVelocity contrib plugin updated to provide access to system configuration inside templates. r3126
+
+----
+= v1.0.5 =
 
 Major works on system messaging for robustness and improved functionality. The Solr Event Log Subscriber and the !ReIndex tool also got some long overdue tender loving care.
 

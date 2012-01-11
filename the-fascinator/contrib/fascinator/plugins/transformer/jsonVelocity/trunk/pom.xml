@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.googlecode.the-fascinator.plugins</groupId>
     <artifactId>plugin-transformer-jsonVelocity</artifactId>
-    <version>1.0.6-SNAPSHOT</version>
+    <version>1.0.6</version>
     <name>Fascinator - Plugin - Transformer - JSON Velocity</name>
     <parent>
         <artifactId>organisation</artifactId>
@@ -49,9 +49,9 @@
         </dependency>
     </dependencies>
     <scm>
-        <url>http://the-fascinator.googlecode.com/svn/the-fascinator/contrib/fascinator/plugins/transformer/jsonVelocity/trunk</url>
-        <connection>scm:svn:http://the-fascinator.googlecode.com/svn/the-fascinator/contrib/fascinator/plugins/transformer/jsonVelocity/trunk</connection>
-        <developerConnection>scm:svn:https://the-fascinator.googlecode.com/svn/the-fascinator/contrib/fascinator/plugins/transformer/jsonVelocity/trunk</developerConnection>
+        <url>http://the-fascinator.googlecode.com/svn/the-fascinator/contrib/fascinator/plugins/transformer/jsonVelocity/tags/plugin-transformer-jsonVelocity-1.0.6</url>
+        <connection>scm:svn:http://the-fascinator.googlecode.com/svn/the-fascinator/contrib/fascinator/plugins/transformer/jsonVelocity/tags/plugin-transformer-jsonVelocity-1.0.6</connection>
+        <developerConnection>scm:svn:https://the-fascinator.googlecode.com/svn/the-fascinator/contrib/fascinator/plugins/transformer/jsonVelocity/tags/plugin-transformer-jsonVelocity-1.0.6</developerConnection>
     </scm>
     <reporting>
         <plugins>

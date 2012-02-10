@@ -1526,7 +1526,7 @@ var widgets={forms:[], globalObject:this};
                     if(t.attr("type")!="checkbox"){
                         t.val(data[v].replace(/\\n/g,"\n")).trigger("onDataChanged");
                     }else{
-                        t.attr("checked", data[v]);
+                        t.attr("checked", data[v]).trigger("onDataChanged");
                     }
                   }else{
                       t=ctxInputs.filter("[type=radio][name="+v+"][value="+data[v]+"]");

@@ -19,11 +19,7 @@
  */
 package com.googlecode.fascinator.storage.fedora;
 
-import com.googlecode.fascinator.api.storage.StorageException;
-import com.googlecode.fascinator.common.BasicHttpClient;
-import com.googlecode.fascinator.common.JsonSimpleConfig;
 import java.io.Closeable;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,6 +40,10 @@ import org.fcrepo.server.management.FedoraAPIM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.googlecode.fascinator.api.storage.StorageException;
+import com.googlecode.fascinator.common.BasicHttpClient;
+import com.googlecode.fascinator.common.JsonSimpleConfig;
+
 /**
  * A private utility class to wrap Fedora connectivity and save repeated
  * instantiations across the package. Many methods/properties here are default
@@ -60,8 +60,7 @@ public class Fedora3 {
     private static final String DEFAULT_NAMESPACE = "uuid";
 
     /** Test PID to retrieve from the server **/
-    private static final String FEDORA_TEST_PID =
-            "fedora-system:FedoraObject-3.0";
+    private static final String FEDORA_TEST_PID = "fedora-system:FedoraObject-3.0";
 
     /** Logger */
     private static Logger log = LoggerFactory.getLogger(Fedora3.class);
@@ -116,8 +115,8 @@ public class Fedora3 {
             systemConfig = new JsonSimpleConfig(jsonFile);
             init();
         } catch (IOException ioe) {
-            throw new StorageException(
-                    "Failed to read file configuration!", ioe);
+            throw new StorageException("Failed to read file configuration!",
+                    ioe);
         }
     }
 
@@ -132,8 +131,8 @@ public class Fedora3 {
             systemConfig = new JsonSimpleConfig(jsonString);
             init();
         } catch (IOException ioe) {
-            throw new StorageException(
-                    "Failed to read string configuration!", ioe);
+            throw new StorageException("Failed to read string configuration!",
+                    ioe);
         }
     }
 
@@ -149,20 +148,20 @@ public class Fedora3 {
         }
 
         // Grab all our information from config
-        fedoraUrl = systemConfig.getString(DEFAULT_URL,
-                "storage", "fedora3", "url");
-        fedoraUsername = systemConfig.getString(null,
-                "storage", "fedora3", "username");
-        fedoraPassword = systemConfig.getString(null,
-                "storage", "fedora3", "password");
-        fedoraNamespace = systemConfig.getString(DEFAULT_NAMESPACE,
-                "storage", "fedora3", "namespace");
-        fedoraTimeout = systemConfig.getInteger(15,
-                "storage", "fedora3", "timeout");
-        if (fedoraUrl == null || fedoraNamespace == null ||
-                fedoraUsername == null || fedoraPassword == null) {
-            throw new StorageException("Fedora Storage:" +
-                    " Valid Fedora configuration is mising!");
+        fedoraUrl = systemConfig.getString(DEFAULT_URL, "storage", "fedora3",
+                "url");
+        fedoraUsername = systemConfig.getString(null, "storage", "fedora3",
+                "username");
+        fedoraPassword = systemConfig.getString(null, "storage", "fedora3",
+                "password");
+        fedoraNamespace = systemConfig.getString(DEFAULT_NAMESPACE, "storage",
+                "fedora3", "namespace");
+        fedoraTimeout = systemConfig.getInteger(15, "storage", "fedora3",
+                "timeout");
+        if (fedoraUrl == null || fedoraNamespace == null
+                || fedoraUsername == null || fedoraPassword == null) {
+            throw new StorageException("Fedora Storage:"
+                    + " Valid Fedora configuration is mising!");
         }
 
         // Sort out our base URL and HTTP client
@@ -172,7 +171,7 @@ public class Fedora3 {
         fedoraGetUrl = fedoraUrl + "get/";
         http = new BasicHttpClient(fedoraUrl);
         http.authenticate(fedoraUsername, fedoraPassword);
-        connections = new HashMap();
+        connections = new HashMap<String, List<GetMethod>>();
         // Will throw the StorageException for us if there's something wrong
         fedoraConnect();
     }
@@ -180,7 +179,7 @@ public class Fedora3 {
     /**
      * Establish a connection to Fedora's management API (API-M) to confirm
      * credentials, then return the instantiated fedora client used to connect.
-     *
+     * 
      * @return FedoraClient : The client used to connect to the API
      * @throws StorageException if there was an error
      */
@@ -191,12 +190,12 @@ public class Fedora3 {
 
         try {
             // Connect to the server
-            fedoraClient = new FedoraClient(
-                    fedoraUrl, fedoraUsername, fedoraPassword);
+            fedoraClient = new FedoraClient(fedoraUrl, fedoraUsername,
+                    fedoraPassword);
             fedoraClient.SOCKET_TIMEOUT_SECONDS = fedoraTimeout;
 
             // Because this is a new connection we're going
-            //    to do some additional work (and logging)
+            // to do some additional work (and logging)
             log.info("Connected to FEDORA : '{}'", fedoraUrl);
             // Make sure we can get the server version
             fedoraVersion = fedoraClient.getServerVersion();
@@ -214,21 +213,21 @@ public class Fedora3 {
             // Version 3.x credentials test..
             byte[] data = managementApi.getObjectXML(FEDORA_TEST_PID);
             if (data != null && data.length > 0) {
-                log.info("Access checked: '{}' = {} bytes",
-                        FEDORA_TEST_PID, data.length);
+                log.info("Access checked: '{}' = {} bytes", FEDORA_TEST_PID,
+                        data.length);
             } else {
                 throw new StorageException("Error; could not retrieve "
                         + FEDORA_TEST_PID);
             }
         } catch (MalformedURLException ex) {
-            throw new StorageException("Fedora Storage:" +
-                    " Server URL is Invalid (?) : ", ex);
+            throw new StorageException("Fedora Storage:"
+                    + " Server URL is Invalid (?) : ", ex);
         } catch (IOException ex) {
-            throw new StorageException("Fedora Storage:" +
-                    " Error connecting to Fedora! : ", ex);
+            throw new StorageException("Fedora Storage:"
+                    + " Error connecting to Fedora! : ", ex);
         } catch (Exception ex) {
-            throw new StorageException("Fedora Storage:" +
-                    " Error accesing management API! : ", ex);
+            throw new StorageException("Fedora Storage:"
+                    + " Error accesing management API! : ", ex);
         }
         return fedoraClient;
     }
@@ -262,8 +261,8 @@ public class Fedora3 {
         if (managementApi == null) {
             getClient();
             if (managementApi == null) {
-                throw new StorageException("Fedora Storage:" +
-                    " Unknown problem accessing API-M!");
+                throw new StorageException("Fedora Storage:"
+                        + " Unknown problem accessing API-M!");
             }
         }
         return managementApi;
@@ -281,12 +280,12 @@ public class Fedora3 {
             try {
                 accessApi = client.getAPIA();
             } catch (Exception ex) {
-                throw new StorageException("Fedora Storage:" +
-                        " Error accesing standard API! : ", ex);
+                throw new StorageException("Fedora Storage:"
+                        + " Error accesing standard API! : ", ex);
             }
             if (accessApi == null) {
-                throw new StorageException("Fedora Storage:" +
-                    " Unknown problem standard API-M!");
+                throw new StorageException("Fedora Storage:"
+                        + " Unknown problem standard API-M!");
             }
         }
         return accessApi;
@@ -331,7 +330,7 @@ public class Fedora3 {
      */
     static InputStream getStream(String fedoraPid, String dsId)
             throws IOException {
-        //log.debug("getStream({}, {})", fedoraPid, dsId);
+        // log.debug("getStream({}, {})", fedoraPid, dsId);
         String key = fedoraPid + "/" + dsId;
         String url = buildGetUrl(fedoraPid, dsId);
         if (url == null) {
@@ -344,7 +343,7 @@ public class Fedora3 {
             InputStream response = method.getResponseBodyAsStream();
             // Cache our connection
             if (!connections.containsKey(key)) {
-                connections.put(key, new ArrayList());
+                connections.put(key, new ArrayList<GetMethod>());
             }
             connections.get(key).add(method);
             return response;
@@ -354,15 +353,15 @@ public class Fedora3 {
     }
 
     /**
-     * Release an open HTTP connection that may be held for
-     * this combination of PID and DSID.
+     * Release an open HTTP connection that may be held for this combination of
+     * PID and DSID.
      * 
      * @param fedoraPid The fedora PID containing the datastream
      * @param dsId The datastream's ID
      */
     static void release(String fedoraPid, String dsId) {
-        //log.debug("release({}, {})", fedoraPid, dsId);
-        
+        // log.debug("release({}, {})", fedoraPid, dsId);
+
         /*
          * This idea is worthwhile, but at this stage seems impractical.
          * We need some way of defining a key that is targetable to an
@@ -393,7 +392,7 @@ public class Fedora3 {
         String key = fedoraPid + "/" + dsId;
         if (connections.containsKey(key)) {
             // Prepare
-            List<Integer> toClose = new ArrayList();
+            List<Integer> toClose = new ArrayList<Integer>();
             List<GetMethod> toTest = connections.get(key);
             Integer limit = toTest.size();
             // Loop through all connections
@@ -405,7 +404,7 @@ public class Fedora3 {
                     if (in == null) {
                         close = true;
                     }
-                } catch(IOException ioe) {
+                } catch (IOException ioe) {
                     // Case two... some unknown error
                     close = true;
                 }
@@ -414,9 +413,9 @@ public class Fedora3 {
                     toClose.add(i);
                 }
             }
-            
+
             // Second loop... and backwards to preserve index orders
-            //    as we remove higher values
+            // as we remove higher values
             limit = toClose.size();
             for (Integer i = limit - 1; i >= 0; i--) {
                 // Close
@@ -438,12 +437,12 @@ public class Fedora3 {
         try {
             String returnValue = fedoraGetUrl;
             returnValue += URLEncoder.encode(fedoraPid, "UTF-8");
-            if (dsId != null)  {
+            if (dsId != null) {
                 returnValue += "/";
                 returnValue += URLEncoder.encode(dsId, "UTF-8");
             }
             return returnValue;
-        } catch(UnsupportedEncodingException ex) {
+        } catch (UnsupportedEncodingException ex) {
             log.error("Error encoding URL for object '{}' and DS '{}'",
                     fedoraPid, dsId);
             return null;

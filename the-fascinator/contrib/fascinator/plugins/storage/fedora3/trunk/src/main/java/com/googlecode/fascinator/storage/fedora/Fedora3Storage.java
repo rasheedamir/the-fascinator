@@ -19,20 +19,12 @@
  */
 package com.googlecode.fascinator.storage.fedora;
 
-import com.googlecode.fascinator.api.PluginDescription;
-import com.googlecode.fascinator.api.storage.DigitalObject;
-import com.googlecode.fascinator.api.storage.Storage;
-import com.googlecode.fascinator.api.storage.StorageException;
-import com.googlecode.fascinator.common.JsonSimpleConfig;
-
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.HashSet;
 import java.util.Set;
@@ -47,47 +39,56 @@ import org.fcrepo.server.types.gen.ObjectFields;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.googlecode.fascinator.api.PluginDescription;
+import com.googlecode.fascinator.api.storage.DigitalObject;
+import com.googlecode.fascinator.api.storage.Storage;
+import com.googlecode.fascinator.api.storage.StorageException;
+import com.googlecode.fascinator.common.JsonSimpleConfig;
+
 /**
- * <p>This plugin provides storage using version 3.5 of the
- * <a href="http://www.fedora-commons.org/">Fedora Commons</a> Client.
- * It has been tested against v3.5, v3.3.1 and v2.2.4 Fedora servers,
- * but will probably support others as well.</p>
- *
+ * <p>
+ * This plugin provides storage using version 3.5 of the <a
+ * href="http://www.fedora-commons.org/">Fedora Commons</a> Client. It has been
+ * tested against v3.5, v3.3.1 and v2.2.4 Fedora servers, but will probably
+ * support others as well.
+ * </p>
+ * 
  * <h3>Configuration</h3>
  * <table border="1">
- *   <tr>
- *     <th>Option</th>
- *     <th>Description</th>
- *     <th>Required</th>
- *     <th>Default</th>
- *   </tr>
- *   <tr>
- *     <td>url</td>
- *     <td>Base URL of a Fedora Commons server</td>
- *     <td><b>Yes</b></td>
- *     <td>http://localhost:8080/fedora</td>
- *   </tr>
- *   <tr>
- *     <td>username</td>
- *     <td>Fedora user account with read/write access</td>
- *     <td><b>Yes</b> (depending on server setup)</td>
- *     <td>fedoraAdmin</td>
- *   </tr>
- *   <tr>
- *     <td>password</td>
- *     <td>Password for the above user account</td>
- *     <td><b>Yes</b> (depending on server setup)</td>
- *     <td>fedoraAdmin</td>
- *   </tr>
- *   <tr>
- *     <td>namespace</td>
- *     <td>Namespace to use for Fedora Object PIDs</td>
- *     <td>No</td>
- *     <td>uuid</td>
- *   </tr>
+ * <tr>
+ * <th>Option</th>
+ * <th>Description</th>
+ * <th>Required</th>
+ * <th>Default</th>
+ * </tr>
+ * <tr>
+ * <td>url</td>
+ * <td>Base URL of a Fedora Commons server</td>
+ * <td><b>Yes</b></td>
+ * <td>http://localhost:8080/fedora</td>
+ * </tr>
+ * <tr>
+ * <td>username</td>
+ * <td>Fedora user account with read/write access</td>
+ * <td><b>Yes</b> (depending on server setup)</td>
+ * <td>fedoraAdmin</td>
+ * </tr>
+ * <tr>
+ * <td>password</td>
+ * <td>Password for the above user account</td>
+ * <td><b>Yes</b> (depending on server setup)</td>
+ * <td>fedoraAdmin</td>
+ * </tr>
+ * <tr>
+ * <td>namespace</td>
+ * <td>Namespace to use for Fedora Object PIDs</td>
+ * <td>No</td>
+ * <td>uuid</td>
+ * </tr>
  * </table>
- *
+ * 
  * <h3>Sample configuration</h3>
+ * 
  * <pre>
  * {
  *     "storage": {
@@ -101,7 +102,7 @@ import org.slf4j.LoggerFactory;
  *     }
  * }
  * </pre>
- *
+ * 
  * @author Linda Octalina
  * @author Oliver Lucido
  * @author Greg Pendlebury
@@ -114,12 +115,10 @@ public class Fedora3Storage implements Storage {
     private static String FOXML_VERSION = "info:fedora/fedora-system:FOXML-1.1";
 
     /** Fedora log message for adding an object */
-    private static String ADD_LOG_MESSAGE =
-            "Fedora3DigitalObject added";
+    private static String ADD_LOG_MESSAGE = "Fedora3DigitalObject added";
 
     /** Fedora log message for deleting an object */
-    private static String DELETE_LOG_MESSAGE =
-            "Fedora3DigitalObject deleted";
+    private static String DELETE_LOG_MESSAGE = "Fedora3DigitalObject deleted";
 
     /** Logger */
     private Logger log = LoggerFactory.getLogger(Fedora3Storage.class);
@@ -163,8 +162,8 @@ public class Fedora3Storage implements Storage {
             Fedora3.init(jsonFile);
             init();
         } catch (IOException ioe) {
-            throw new StorageException(
-                    "Failed to read file configuration!", ioe);
+            throw new StorageException("Failed to read file configuration!",
+                    ioe);
         }
     }
 
@@ -181,8 +180,8 @@ public class Fedora3Storage implements Storage {
             Fedora3.init(jsonString);
             init();
         } catch (IOException ioe) {
-            throw new StorageException(
-                    "Failed to read string configuration!", ioe);
+            throw new StorageException("Failed to read string configuration!",
+                    ioe);
         }
     }
 
@@ -196,8 +195,8 @@ public class Fedora3Storage implements Storage {
         Fedora3.getClient();
 
         // Do we have a template?
-        String templatePath = systemConfig.getString(null,
-                "storage", "fedora3", "foxmlTemplate");
+        String templatePath = systemConfig.getString(null, "storage",
+                "fedora3", "foxmlTemplate");
         File templateFile = null;
         boolean deleteTempFile = false;
         if (templatePath != null) {
@@ -228,8 +227,8 @@ public class Fedora3Storage implements Storage {
     }
 
     /**
-     * Not part of the API, but used in unit testing. Check the version
-     * of the connected Fedora Server
+     * Not part of the API, but used in unit testing. Check the version of the
+     * connected Fedora Server
      * 
      * @throws String The Fedora Server's version
      */
@@ -267,7 +266,7 @@ public class Fedora3Storage implements Storage {
      */
     @Override
     public DigitalObject createObject(String oid) throws StorageException {
-        //log.debug("createObject({})", oid);
+        // log.debug("createObject({})", oid);
         if (oid == null) {
             throw new StorageException("Error; Null OID recieved");
         }
@@ -278,8 +277,8 @@ public class Fedora3Storage implements Storage {
         try {
             data = Fedora3.getApiM().getObjectXML(fedoraPid);
             if (data != null && data.length > 0) {
-                throw new StorageException(
-                        "Error; object '"+oid+"' already exists in Fedora");
+                throw new StorageException("Error; object '" + oid
+                        + "' already exists in Fedora");
             }
         } catch (RemoteException ex) {
             // This is OK... object does not exist
@@ -290,9 +289,8 @@ public class Fedora3Storage implements Storage {
         // New content
         try {
             data = prepareTemplate(fedoraPid, oid);
-            String responsePid = Fedora3.getApiM().ingest(
-                    data,             // XML Content
-                    FOXML_VERSION,    // Format
+            String responsePid = Fedora3.getApiM().ingest(data, // XML Content
+                    FOXML_VERSION, // Format
                     ADD_LOG_MESSAGE); // Log message
             if (!fedoraPid.equals(responsePid)) {
                 log.error("Error; PID Mismatch during creation. We sent '{}'"
@@ -320,7 +318,7 @@ public class Fedora3Storage implements Storage {
      */
     @Override
     public DigitalObject getObject(String oid) throws StorageException {
-        //log.debug("getObject({})", oid);
+        // log.debug("getObject({})", oid);
         if (oid == null) {
             throw new StorageException("Error; Null OID recieved");
         }
@@ -329,8 +327,8 @@ public class Fedora3Storage implements Storage {
             // Confirm we can see the object in Fedora
             byte[] data = Fedora3.getApiM().getObjectXML(fedoraPid);
             if (data == null || data.length == 0) {
-                throw new StorageException(
-                        "Error; could not find object '"+oid+"' in Fedora");
+                throw new StorageException("Error; could not find object '"
+                        + oid + "' in Fedora");
             }
             // Instantiate and return
             return new Fedora3DigitalObject(oid, fedoraPid);
@@ -349,7 +347,7 @@ public class Fedora3Storage implements Storage {
      */
     @Override
     public void removeObject(String oid) throws StorageException {
-        //log.debug("removeObject({})", oid);
+        // log.debug("removeObject({})", oid);
         if (oid == null) {
             throw new StorageException("Error; Null OID recieved");
         }
@@ -380,27 +378,27 @@ public class Fedora3Storage implements Storage {
      */
     @Override
     public Set<String> getObjectIdList() {
-        log.info("Complete storage OID list requested..."); 
+        log.info("Complete storage OID list requested...");
         // Our response set
         Set<String> objectList = new HashSet<String>();
         // Search constants
         NonNegativeInteger limit = Fedora3.axisNum(SEARCH_ROW_LIMIT_PER_PAGE);
-        String[] fields = new String[] {"pid", "label"};
+        String[] fields = new String[] { "pid", "label" };
         FieldSearchQuery query = new FieldSearchQuery();
-        query.setTerms(Fedora3.namespace()+":*");
+        query.setTerms(Fedora3.namespace() + ":*");
 
         try {
-            log.info("... searching Fedora"); 
-            FieldSearchResult result = Fedora3.getApiA().findObjects(
-                    fields, limit, query);
+            log.info("... searching Fedora");
+            FieldSearchResult result = Fedora3.getApiA().findObjects(fields,
+                    limit, query);
             while (result != null) {
                 for (ObjectFields object : result.getResultList()) {
                     objectList.add(object.getLabel());
                 }
                 ListSession session = result.getListSession();
                 if (session != null) {
-                    log.info("... searching Fedora : row(s) {}+",
-                            session.getCursor().intValue() + 1); 
+                    log.info("... searching Fedora : row(s) {}+", session
+                            .getCursor().intValue() + 1);
                     result = Fedora3.getApiA().resumeFindObjects(
                             session.getToken());
                 } else {
@@ -418,8 +416,8 @@ public class Fedora3Storage implements Storage {
     }
 
     /**
-     * Translate a Fascinator OID into a hashed Fedora ID with namespace.
-     * Should prevent any issues related to special characters being used in IDs
+     * Translate a Fascinator OID into a hashed Fedora ID with namespace. Should
+     * prevent any issues related to special characters being used in IDs
      * 
      * @param oid the Object ID from Fascinator
      * @return String the Fedora PID to use
@@ -435,7 +433,7 @@ public class Fedora3Storage implements Storage {
      * @return File a temporary File containing the resource's data
      */
     private File resourceToFile(String resourcesName) throws IOException {
-        InputStream in = getClass().getResourceAsStream("/"+resourcesName);
+        InputStream in = getClass().getResourceAsStream("/" + resourcesName);
         File newFile = File.createTempFile("tempResource", "tmp");
         FileOutputStream out = new FileOutputStream(newFile);
         IOUtils.copy(in, out);
@@ -461,7 +459,8 @@ public class Fedora3Storage implements Storage {
             int bytesRead = inputStream.read(buffer);
             // Validate
             if (bytesRead != expectedLength) {
-                log.error("Error reading file data; {} bytes read; expected {}",
+                log.error(
+                        "Error reading file data; {} bytes read; expected {}",
                         bytesRead, expectedLength);
                 return null;
             }

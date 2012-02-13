@@ -215,7 +215,7 @@ public class SkosHarvester extends GenericHarvester {
         }
 
         // Concept list
-        Collection concepts = container.getAll(SKOS.hasTopConcept);
+        Collection<?> concepts = container.getAll(SKOS.hasTopConcept);
         try {
             createConceptStructure(skosObjectIdList, concepts, newUri);
         } catch (StorageException e) {
@@ -237,16 +237,16 @@ public class SkosHarvester extends GenericHarvester {
      * @throws IOException if fail to create new payload
      */
     private void createConceptStructure(Set<String> skosObjectIdList,
-            Collection collection, String conceptUri)
+            Collection<?> collection, String conceptUri)
             throws HarvesterException, StorageException, IOException {
-        for (Iterator iterator = collection.iterator(); iterator.hasNext();) {
+        for (Iterator<?> iterator = collection.iterator(); iterator.hasNext();) {
             Node node = (Node) iterator.next();
             String conceptType = getType(node.toString());
             String newConceptUri = conceptUri + conceptType + "/";
 
             RDFContainer conceptContainer = new RDFContainerImpl(rdfModel,
                     node.toString());
-            Collection narrowers = conceptContainer.getAll(SKOS.narrower); // Need to loop through all the child again...
+            Collection<?> narrowers = conceptContainer.getAll(SKOS.narrower); // Need to loop through all the child again...
 
             // Create the top concept object
             skosObjectIdList.add(createSkosObject(new URIImpl(node.toString()),

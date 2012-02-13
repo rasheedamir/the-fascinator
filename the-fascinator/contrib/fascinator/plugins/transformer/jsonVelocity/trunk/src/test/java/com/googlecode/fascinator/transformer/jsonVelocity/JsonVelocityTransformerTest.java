@@ -48,7 +48,8 @@ public class JsonVelocityTransformerTest {
 
     private Util util;
 
-    private JsonSimpleConfig config;
+    @SuppressWarnings("unused")
+	private JsonSimpleConfig config;
 
     private JsonSimple tfpackage;
 

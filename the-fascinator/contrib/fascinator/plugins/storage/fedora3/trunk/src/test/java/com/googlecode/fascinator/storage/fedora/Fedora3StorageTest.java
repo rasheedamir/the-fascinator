@@ -18,16 +18,10 @@
  */
 package com.googlecode.fascinator.storage.fedora;
 
-import com.googlecode.fascinator.api.storage.DigitalObject;
-import com.googlecode.fascinator.api.storage.Payload;
-import com.googlecode.fascinator.api.storage.PayloadType;
-import com.googlecode.fascinator.api.storage.StorageException;
-
 import java.io.File;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
+
 import junit.framework.Assert;
 
 import org.junit.After;
@@ -35,6 +29,12 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import com.googlecode.fascinator.api.storage.DigitalObject;
+import com.googlecode.fascinator.api.storage.Payload;
+import com.googlecode.fascinator.api.storage.PayloadType;
+import com.googlecode.fascinator.api.storage.StorageException;
+
+@SuppressWarnings("unused")
 @Ignore
 public class Fedora3StorageTest {
     private Fedora3Storage storage;
@@ -56,9 +56,9 @@ public class Fedora3StorageTest {
             storage.shutdown();
         }
         // Super Nuke... We expect 'messy' failures to cause a size test to
-        //   fail in the init() method, but cleaning up for the next test can
-        //   be annoying if done manually. Uncomment this for one execution.
-        //nukeStorage();
+        // fail in the init() method, but cleaning up for the next test can
+        // be annoying if done manually. Uncomment this for one execution.
+        // nukeStorage();
     }
 
     private void nukeStorage() throws Exception {
@@ -70,7 +70,7 @@ public class Fedora3StorageTest {
     /**
      * Test the object creation process for all use cases
      * 
-     * @throws Exception 
+     * @throws Exception
      */
     @Test
     public void objectCreation() throws Exception {
@@ -103,7 +103,7 @@ public class Fedora3StorageTest {
     /**
      * Test the object retrieval process for all use cases
      * 
-     * @throws Exception 
+     * @throws Exception
      */
     @Test
     public void objectRetrieval() throws Exception {
@@ -129,8 +129,8 @@ public class Fedora3StorageTest {
         sizeTest(1);
         DigitalObject object = storage.getObject("testObject1");
         Assert.assertNotNull(object);
-        Assert.assertEquals("Object ID does not match",
-                "testObject1", object.getId());
+        Assert.assertEquals("Object ID does not match", "testObject1",
+                object.getId());
 
         // Cleanup
         storage.removeObject("testObject1");
@@ -139,7 +139,7 @@ public class Fedora3StorageTest {
     /**
      * Test the object removal process for all use cases
      * 
-     * @throws Exception 
+     * @throws Exception
      */
     @Test
     public void objectRemoval() throws Exception {
@@ -170,7 +170,7 @@ public class Fedora3StorageTest {
     /**
      * Test the payload creation process for all use cases
      * 
-     * @throws Exception 
+     * @throws Exception
      */
     @Test
     public void payloadCreation() throws Exception {
@@ -227,10 +227,10 @@ public class Fedora3StorageTest {
     }
 
     /**
-     * Test the payload storage process, related to creation
-     * above, but very specific
+     * Test the payload storage process, related to creation above, but very
+     * specific
      * 
-     * @throws Exception 
+     * @throws Exception
      */
     @Test
     public void payloadStorage() throws Exception {
@@ -241,16 +241,16 @@ public class Fedora3StorageTest {
         // 1) 'Stored' payload - 16261 bytes
         sizeTest(1);
         sizeTest(object, 0);
-        Payload payload1 = object.createStoredPayload(
-                "testPayload1", in("testPayload4.png"));
+        Payload payload1 = object.createStoredPayload("testPayload1",
+                in("testPayload4.png"));
         sizeTest(1);
         sizeTest(object, 1);
         sizeTest(payload1, 16261);
         Assert.assertEquals(false, payload1.isLinked());
 
         // 2) 'Linked' payload - 16261 bytes... ie. Not really linked
-        Payload payload2 = object.createLinkedPayload(
-                "testPayload2", path("testPayload4.png"));
+        Payload payload2 = object.createLinkedPayload("testPayload2",
+                path("testPayload4.png"));
         sizeTest(1);
         sizeTest(object, 2);
         sizeTest(payload2, 16261);
@@ -263,7 +263,7 @@ public class Fedora3StorageTest {
     /**
      * Test the payload retrieval process for all use cases
      * 
-     * @throws Exception 
+     * @throws Exception
      */
     @Test
     public void payloadRetrieval() throws Exception {
@@ -295,8 +295,8 @@ public class Fedora3StorageTest {
         sizeTest(object, 1);
         Payload payload = object.getPayload("testPayload1");
         Assert.assertNotNull(payload);
-        Assert.assertEquals("Payload ID does not match",
-                "testPayload1", payload.getId());
+        Assert.assertEquals("Payload ID does not match", "testPayload1",
+                payload.getId());
 
         // Cleanup
         storage.removeObject("testObject1");
@@ -305,7 +305,7 @@ public class Fedora3StorageTest {
     /**
      * Test the payload removal process for all use cases
      * 
-     * @throws Exception 
+     * @throws Exception
      */
     @Test
     public void payloadRemoval() throws Exception {
@@ -342,7 +342,7 @@ public class Fedora3StorageTest {
     /**
      * Test the payload update process for all use cases
      * 
-     * @throws Exception 
+     * @throws Exception
      */
     @Test
     public void payloadUpdate() throws Exception {
@@ -383,8 +383,8 @@ public class Fedora3StorageTest {
         }
 
         // 5) Normal update... after creation
-        Payload payload1 = object.createStoredPayload(
-                "testPayload1", in("testPayload4.png"));
+        Payload payload1 = object.createStoredPayload("testPayload1",
+                in("testPayload4.png"));
         sizeTest(1);
         sizeTest(object, 1);
         sizeTest(payload1, 16261);
@@ -408,41 +408,41 @@ public class Fedora3StorageTest {
     /**
      * Test the payload open/close cycle and connection/stream access
      * 
-     * @throws Exception 
+     * @throws Exception
      */
     @Test
     public void payloadOpenClose() throws Exception {
         System.out.println("\n==========\n TEST => payloadOpenClose()\n");
         // Create a basic test object
         DigitalObject object = storage.createObject("testObject1");
-        Payload payload1 = object.createStoredPayload(
-                "testPayload1", in("testPayload1.txt"));
-        Payload payload2 = object.createStoredPayload(
-                "testPayload2", in("testPayload1.txt"));
-        Payload payload3 = object.createStoredPayload(
-                "testPayload3", in("testPayload1.txt"));
+        Payload payload1 = object.createStoredPayload("testPayload1",
+                in("testPayload1.txt"));
+        Payload payload2 = object.createStoredPayload("testPayload2",
+                in("testPayload1.txt"));
+        Payload payload3 = object.createStoredPayload("testPayload3",
+                in("testPayload1.txt"));
         sizeTest(1);
         sizeTest(object, 3);
 
         // TODO: This test would be nice, but not currently possible. See notes
-        //   in Fedora3.release() for the limitations of the current API.
+        // in Fedora3.release() for the limitations of the current API.
         // 1) Reading a closed stream
-        //try {
-        //    InputStream in = payload1.open();
-        //    payload1.close();
-        //    in.read();
-        //    Assert.fail();
-        //} catch (IOException ex) {
-            // This is what should occur
-        //}
+        // try {
+        // InputStream in = payload1.open();
+        // payload1.close();
+        // in.read();
+        // Assert.fail();
+        // } catch (IOException ex) {
+        // This is what should occur
+        // }
 
         // 2) Massed connection closures... tests that the connection caching
-        //  in not holding lots of open connections IF they are being closed
-        //  cleanly. This test is only really useful on Windows, since other
-        //  OS's will probably take the abuse. Windows will exceed connection
-        //  license limits for no-server editions.
-        //  * Other OS's may notice memory issues related to the cache however,
-        //    Uncomment and make the limit as extreme as desired...
+        // in not holding lots of open connections IF they are being closed
+        // cleanly. This test is only really useful on Windows, since other
+        // OS's will probably take the abuse. Windows will exceed connection
+        // license limits for no-server editions.
+        // * Other OS's may notice memory issues related to the cache however,
+        // Uncomment and make the limit as extreme as desired...
 
         int limit = 10;
         /*
@@ -471,7 +471,7 @@ public class Fedora3StorageTest {
 
         // 3) Trivial read of actual data
         InputStream in = payload1.open();
-        Assert.assertEquals(84, in.read());  // 'T'
+        Assert.assertEquals(84, in.read()); // 'T'
         Assert.assertEquals(101, in.read()); // 'e'
         Assert.assertEquals(115, in.read()); // 's'
         Assert.assertEquals(116, in.read()); // 't'
@@ -485,7 +485,7 @@ public class Fedora3StorageTest {
     /**
      * Test all Payload methods
      * 
-     * @throws Exception 
+     * @throws Exception
      */
     @Test
     public void payloadCompleteTest() throws Exception {
@@ -496,8 +496,8 @@ public class Fedora3StorageTest {
         // 1) Store a payload
         sizeTest(1);
         sizeTest(object, 0);
-        Payload payload1 = object.createStoredPayload(
-                "testPayload1", in("testPayload4.png"));
+        Payload payload1 = object.createStoredPayload("testPayload1",
+                in("testPayload4.png"));
         sizeTest(1);
         sizeTest(object, 1);
         sizeTest(payload1, 16261);
@@ -515,14 +515,14 @@ public class Fedora3StorageTest {
         payload1.setContentType("random/invalid");
         payload1.setLabel("Test Payload 1");
         Payload payload2 = object.getPayload("testPayload1");
-        Assert.assertEquals("testPayload1",   payload2.getId());
+        Assert.assertEquals("testPayload1", payload2.getId());
         Assert.assertEquals("testPayload1", payload2.getLabel());
         Assert.assertEquals("image/png", payload2.getContentType());
 
         // 4) Now close and test again
         payload1.close();
         payload2 = object.getPayload("testPayload1");
-        Assert.assertEquals("testPayload1",   payload2.getId());
+        Assert.assertEquals("testPayload1", payload2.getId());
         Assert.assertEquals("Test Payload 1", payload2.getLabel());
         Assert.assertEquals("random/invalid", payload2.getContentType());
 
@@ -551,7 +551,7 @@ public class Fedora3StorageTest {
      * Mostly testing modification times, but unlike the payloadUpdate() method
      * we are also checking persistence from two object references.
      * 
-     * @throws Exception 
+     * @throws Exception
      */
     @Test
     public void payloadModify() throws Exception {
@@ -562,8 +562,8 @@ public class Fedora3StorageTest {
         // 1) Store a payload
         sizeTest(1);
         sizeTest(object, 0);
-        Payload payload1 = object.createStoredPayload(
-                "testPayload1", in("testPayload1.txt"));
+        Payload payload1 = object.createStoredPayload("testPayload1",
+                in("testPayload1.txt"));
         sizeTest(1);
         sizeTest(object, 1);
 
@@ -594,7 +594,7 @@ public class Fedora3StorageTest {
     /**
      * Modify the metadata on an object and ensure it persists.
      * 
-     * @throws Exception 
+     * @throws Exception
      */
     @Test
     public void metadataTest() throws Exception {
@@ -623,7 +623,7 @@ public class Fedora3StorageTest {
      * Similar to the connection testing above, set the limit as high as you
      * would like to stress test your system.
      * 
-     * @throws Exception 
+     * @throws Exception
      */
     @Test
     public void stressTest() throws Exception {
@@ -631,34 +631,34 @@ public class Fedora3StorageTest {
         int objectLimit = 10;
 
         for (int i = 0; i < objectLimit; i++) {
-            DigitalObject object = storage.createObject("testObject"+i);
+            DigitalObject object = storage.createObject("testObject" + i);
             // Payload 1
-            Payload payload1 = object.createStoredPayload(
-                    "testPayload1", in("testPayload1.txt"));
+            Payload payload1 = object.createStoredPayload("testPayload1",
+                    in("testPayload1.txt"));
             Assert.assertEquals("testPayload1", object.getSourceId());
             payload1.setType(PayloadType.Preview);
             payload1.setLabel("Test Payload 1");
             payload1.close();
             // Payload 2
-            Payload payload2 = object.createStoredPayload(
-                    "testPayload2", in("testPayload2.xml"));
+            Payload payload2 = object.createStoredPayload("testPayload2",
+                    in("testPayload2.xml"));
             payload2.setType(PayloadType.Annotation);
-            payload2.setLabel("Test Payload 2 from Object "+i);
+            payload2.setLabel("Test Payload 2 from Object " + i);
             payload2.close();
             // Payload 3
-            Payload payload3 = object.createStoredPayload(
-                    "testPayload3", in("testPayload3"));
+            Payload payload3 = object.createStoredPayload("testPayload3",
+                    in("testPayload3"));
             payload3.setType(PayloadType.Error);
             payload3.close();
             // Payload 4
-            Payload payload4 = object.createStoredPayload(
-                    "testPayload4", in("testPayload4.png"));
+            Payload payload4 = object.createStoredPayload("testPayload4",
+                    in("testPayload4.png"));
             payload4.setType(PayloadType.Source);
             payload4.close();
 
             // Metadata payload
             Properties metadata = object.getMetadata();
-            metadata.setProperty("objectId", "testObject"+i);
+            metadata.setProperty("objectId", "testObject" + i);
 
             // Confirm expected sizes
             sizeTest(i + 1);
@@ -675,7 +675,7 @@ public class Fedora3StorageTest {
 
         // Testing
         for (int i = 0; i < objectLimit; i++) {
-            DigitalObject object = storage.getObject("testObject"+i);
+            DigitalObject object = storage.getObject("testObject" + i);
             sizeTest(object, 5);
             Assert.assertEquals("testPayload4", object.getSourceId());
 
@@ -706,13 +706,13 @@ public class Fedora3StorageTest {
 
             // Metadata
             Properties metadata = object.getMetadata();
-            Assert.assertEquals("testObject"+i,
+            Assert.assertEquals("testObject" + i,
                     metadata.getProperty("objectId"));
         }
 
         // Cleanup
         for (int i = 0; i < objectLimit; i++) {
-            DigitalObject object = storage.getObject("testObject"+i);
+            DigitalObject object = storage.getObject("testObject" + i);
             sizeTest(object, 5);
             object.removePayload("testPayload1");
             sizeTest(object, 4);
@@ -722,7 +722,7 @@ public class Fedora3StorageTest {
             sizeTest(object, 2);
             object.removePayload("testPayload4");
             sizeTest(object, 1);
-            storage.removeObject("testObject"+i);
+            storage.removeObject("testObject" + i);
             sizeTest(objectLimit - (i + 1));
         }
     }
@@ -731,7 +731,7 @@ public class Fedora3StorageTest {
      * This test doesn't really do anything, but running it last does confirm
      * that all previous tests cleaned up properly.
      * 
-     * @throws Exception 
+     * @throws Exception
      */
     @Test
     public void emptyTest() throws Exception {
@@ -742,22 +742,22 @@ public class Fedora3StorageTest {
      * Wrapper for resource retrieval as InputStreams, simply to reduce call
      * complexity to just 'in("file.name")',
      * 
-     * @throws Exception 
+     * @throws Exception
      */
     private InputStream in(String fileName) {
-        return getClass().getResourceAsStream("/"+fileName);
+        return getClass().getResourceAsStream("/" + fileName);
     }
 
     /**
      * Wrapper for resource retrieval as String paths, simply to reduce call
      * complexity to just 'in("file.name")',
      * 
-     * @throws Exception 
+     * @throws Exception
      */
     private String path(String fileName) throws Exception {
         // Annoyingly enough, a straight toString() call doesn't work
         // 1) Create the File object with a URI
-        File file = new File(getClass().getResource("/"+fileName).toURI());
+        File file = new File(getClass().getResource("/" + fileName).toURI());
         // 2) Return a valid File path via the File class
         return file.getAbsolutePath();
     }
@@ -770,8 +770,9 @@ public class Fedora3StorageTest {
      * @param number The expected number of objects to be found in storage
      */
     private void sizeTest(int number) {
-        Assert.assertEquals("There should be "+number+" object(s) in storage!",
-                number, storage.getObjectIdList().size());
+        Assert.assertEquals("There should be " + number
+                + " object(s) in storage!", number, storage.getObjectIdList()
+                .size());
     }
 
     /**
@@ -783,8 +784,9 @@ public class Fedora3StorageTest {
      * @param number The expected number of payloads to be found in the object
      */
     private void sizeTest(DigitalObject object, int number) {
-        Assert.assertEquals("There should be "+number+" payload(s) in object!",
-                number, object.getPayloadIdList().size());
+        Assert.assertEquals("There should be " + number
+                + " payload(s) in object!", number, object.getPayloadIdList()
+                .size());
     }
 
     /**
@@ -801,7 +803,7 @@ public class Fedora3StorageTest {
         if (fedoraVersion.startsWith("3.3")) {
             number = 0;
         }
-        Assert.assertEquals("Payload should be "+number+" bytes in size!",
+        Assert.assertEquals("Payload should be " + number + " bytes in size!",
                 Long.valueOf(number), payload.size());
     }
 }

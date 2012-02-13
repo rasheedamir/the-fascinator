@@ -40,7 +40,8 @@ import org.slf4j.LoggerFactory;
 public class SkosHarvesterTest {
 
     /** logging */
-    private Logger log = LoggerFactory.getLogger(SkosHarvesterTest.class);
+    @SuppressWarnings("unused")
+	private Logger log = LoggerFactory.getLogger(SkosHarvesterTest.class);
 
     private Storage ram;
 

@@ -208,7 +208,8 @@ public class Util {
 
     // ISO8601 Dates.   Lifted from this example:
     //  http://www.dpawson.co.uk/relaxng/schema/datetime.html
-    private String formatDate(Date input) {
+    @SuppressWarnings("unused")
+	private String formatDate(Date input) {
         // Base time
         SimpleDateFormat ISO8601Local = new SimpleDateFormat(
                 "yyyy-MM-dd'T'HH:mm:ss");

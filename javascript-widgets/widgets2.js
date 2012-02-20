@@ -999,270 +999,325 @@ var widgets={forms:[], globalObject:this};
   // ==============
   // Multi-dropdown selection
   // ==============
-  function buildSelectList(json, parent, jsonGetter, onSelection){
-      var s, o, children={}, ns, selectable, loading;
+  function buildSelectList(json, parent, jsonGetter, onSelection) {
+      var s, o, children = {}, ns, selectable, loading;
       var onJson, onError, selected;
-      try{
+      try {
           ns = (json.namespace || "") || (parent.namespace || "");
-          selectable = (json.selectable==null)?(!!parent.selectable):(!!json.selectable);
+          selectable = (json.selectable == null) ? (!!parent.selectable) : (!!json.selectable);
           s = $("<select/>");
           o = $("<option value=''>Please select one...</option>");
           s.append(o);
           selected = json.restored || json["default"];
-          $.each(json.list, function(c, i){
-            if(i){
-                var sel=!!(i.selectable!=null?i.selectable:selectable);
-                children[i.id]={url:(i.children==1?i.id:i.children), label:i.label, id:i.id,
-                            selectable:sel, namespace:ns, parent:parent};
-                o = $("<option/>");
-                o.attr("value", i.id);
-                if(i.id==selected) o.attr("selected", "selected");
-                o.text(i.label);
-                s.append(o);
-            }
+          $.each(json.list, function(c, i) {
+              if (i) {
+                  var sel = !!(i.selectable != null ? i.selectable : selectable);
+                  children[i.id] = {
+                      url : (i.children == 1 ? i.id : i.children),
+                      label : i.label,
+                      id : i.id,
+                      selectable : sel,
+                      namespace : ns,
+                      parent : parent,
+                      desc: ""
+                  };
+                  if (i.desc != undefined) {
+                      children[i.id].desc = i.desc;
+                  }
+                  o = $("<option/>");
+                  o.attr("value", i.id);
+                  if (i.id == selected) o.attr("selected", "selected");
+                  o.text(i.label);
+                  s.append(o);
+              }
           });
-      }catch(e){
-          _gjson= json;
+      } catch(e) {
+          _gjson = json;
           _gparent = parent;
-          alert("Error in buildSelectList - "+e.message);
+          alert("Error in buildSelectList - " + e.message);
           throw e;
       }
-      function onChange(){
-        var id, child, j;
-        id = s.val();
-        child = children[id] || {parent:parent};
-        if(s.nextUntil){
-            s.nextUntil(":not(select)").remove();
-        }else{
-            function removeSelects(s){
-                if(s.size()==0)return;
-                removeSelects(s.next("select"));
-                try{
-                    // IE7 fixup - remove excess spaces (padding)
-                    var p, n;
-                    p=s.parent()[0];
-                    n=p.childNodes[p.childNodes.length-1];
-                    if(n.nodeValue==false){
-                        p.removeChild(n);
-                    }
-                }catch(e){}
-                s.remove();
-            }
-            removeSelects(s.next("select"));
-        }
-        if(loading && loading.parent().size()){
-          loading.remove();
-        }
-        if(child.url){
-          loading=$("<span style='color:green;' title='id="+child.url+"'> [loading&#160;please&#160;wait...] </span>");
-          s.after(loading);
-          onJson=function(j){
-              //s.after(buildSelectList(j, child, jsonGetter, onSelection));
-              loading.replaceWith(buildSelectList(j, child, jsonGetter, onSelection));
-              s.after(" ");     // break point for IE7
-              onSelection(child);
-          };
-          onError=function(status){
-            loading.text(" Error loading '"+child.url+"' "+status+" ");
-            loading.css("color", "red");
-          };
-          jsonGetter(child.url, onJson, onError);
-        }
-        onSelection(child);
+
+      function onChange() {
+          var id, child, j;
+          id = s.val();
+          child = children[id] || {parent:parent};
+          if (s.nextUntil) {
+              s.nextUntil(":not(select)").remove();
+          } else {
+              function removeSelects(s) {
+                  if (s.size() == 0) return;
+                  removeSelects(s.next("select"));
+                  try{
+                      // IE7 fixup - remove excess spaces (padding)
+                      var p, n;
+                      p = s.parent()[0];
+                      n = p.childNodes[p.childNodes.length - 1];
+                      if (n.nodeValue == false) {
+                          p.removeChild(n);
+                      }
+                  } catch(e) {}
+                  s.remove();
+              }
+              removeSelects(s.next("select"));
+          }
+          if (loading && loading.parent().size()) {
+              loading.remove();
+          }
+          if (child.url) {
+              loading = $("<span style='color:green;' title='id=" + child.url + "'> [loading&#160;please&#160;wait...] </span>");
+              s.after(loading);
+              onJson = function(j) {
+                  //s.after(buildSelectList(j, child, jsonGetter, onSelection));
+                  loading.replaceWith(buildSelectList(j, child, jsonGetter, onSelection));
+                  s.after(" ");     // break point for IE7
+                  onSelection(child);
+              };
+              onError = function(status) {
+                  loading.text(" Error loading '" + child.url + "' " + status + " ");
+                  loading.css("color", "red");
+              };
+              jsonGetter(child.url, onJson, onError);
+          }
+          onSelection(child);
       }
       s.change(onChange).change();
       //setTimeout(onChange, 10);
       return s;
   }
 
-  function sourceDropDown(c, dsdd){
-    try{
-      var ds=$(dsdd), id=dsdd.id, jsonUrl, jsonDataStr, jsonGetter;
-      var selAdd, selAddNs, selAddId, selAddLabel, addButtonDisableTest;
-      var lastSelectionSelectable=false, selectId, dropDownLocation;
-      var onSelection, onJson, onError, jsonDataSrc, topLevelId;
-      var jsonConverterGetter;
-      var listKey, idKey, labelKey, childrenKey, cmp;
-      if(ds.dataset("delay")>0){
-          ds.dataset("delay", ds.dataset("delay")-1);
-          return;
-      }
-      if(ds.dataset("done")){ return; }
-      listKey=ds.dataset("list-key");
-      idKey=ds.dataset("id-key");
-      labelKey=ds.dataset("label-key");
-      childrenKey=ds.dataset("children-key");
-      if(ds.find(".drop-down-location").size()){
-          dropDownLocation=ds.find(".drop-down-location");
-      }else{
-        ds.children("*:not(select)").hide();
-      }
-      selectId=ds.dataset("id");
-      selAdd=ds.parent().find(".selection-add");
-      jsonUrl=ds.dataset("json-source-url") || ds.find(".json-data-source-url").val();
-      jsonDataSrc=ds.find(".json-data-source");
-      jsonDataStr=ds.dataset("json-data") || jsonDataSrc.val() || jsonDataSrc.text();
-      topLevelId=ds.dataset("top-level-id") || "";
-      jsonGetter=getJsonGetter(jsonUrl, jsonDataStr);
+  function sourceDropDown(c, dsdd) {
+      try {
+          var ds = $(dsdd), id = dsdd.id, jsonUrl, jsonDataStr, jsonGetter;
+          var selAdd, selAddNs, selAddId, selAddLabel, selAddDesc, addButtonDisableTest;
+          var lastSelectionSelectable=false, selectId, dropDownLocation;
+          var onSelection, onJson, onError, jsonDataSrc, topLevelId;
+          var jsonConverterGetter;
+          var listKey, idKey, labelKey, descKey, childrenKey, cmp;
+          var descEnabled = false;
 
-      addButtonDisableTest = function(){
-        if(lastSelectionSelectable==false){
-            if(/BUTTON|INPUT/.test(selAdd[0].tagName)){
-                selAdd.attr("disabled", true);
-            }else{
-                selAdd.hide();
-            }
-        }
-      };
-      selAdd.bind("disableTest", addButtonDisableTest).trigger("disableTest");
-      onSelection = function(info){
-        //info.namespace, info.id, info.label, info.selectable, info.parent
-        while(info.selectable!==false && info.selectable!==true){
-          if(info.parent) info = info.parent;
-          else info.selectable=false;
-        }
-        lastSelectionSelectable=info.selectable;
-        if(/BUTTON|INPUT/.test(selAdd[0].tagName)){
-          selAdd.attr("disabled", lastSelectionSelectable?"":"disabled");
-        }else{
-          lastSelectionSelectable?selAdd.show():selAdd.hide();
-        }
-        selAdd.trigger("disableTest");
-        if(lastSelectionSelectable){
-          selAddNs=info.namespace; selAddId=info.id; selAddLabel=info.label;
-        }else{
-          selAddNs=""; selAddId=""; selAddLabel="";
-        }
-        ds.find(".selection-added-id").val(selAddId);
-        ds.find(".selection-added-label").val(selAddLabel);
-        selAdd.find(".selection-added-id").text(selAddId);
-        selAdd.find(".selection-added-label").text(selAddLabel);
-      };
-      jsonConverterGetter=jsonGetter;
-      if(listKey || idKey || labelKey || childrenKey){
-          listKey=listKey || "list";
-          idKey=idKey || "id";
-          labelKey=labelKey || "label";
-          childrenKey=childrenKey || "children";
-          cmp=fn("a,b->a.label==b.label?0:(a.label>b.label?1:-1)");
-          jsonConverterGetter = function(urlId, onJson, onError, notPending){
-              jsonGetter(urlId, function(j){
-                  // convert json
-                  if(j.error){
-                      if($.isFunction(onError)){
-                          onError(j.error);
-                      }else{
-                          alert("Error in json: "+ j.error);
-                      }
-                      return;
+          if (ds.dataset("delay") > 0) {
+              ds.dataset("delay", ds.dataset("delay") - 1);
+              return;
+          }
+          if (ds.dataset("done")) {
+              return;
+          }
+
+          listKey = ds.dataset("list-key");
+          idKey = ds.dataset("id-key");
+          labelKey = ds.dataset("label-key");
+          descKey = ds.dataset("desc-key");
+          childrenKey = ds.dataset("children-key");
+          if (descKey != undefined) {
+              descEnabled = true;
+          }
+          if (ds.find(".drop-down-location").size()) {
+              dropDownLocation = ds.find(".drop-down-location");
+          } else {
+              ds.children("*:not(select)").hide();
+          }
+
+          selectId = ds.dataset("id");
+          selAdd = ds.parent().find(".selection-add");
+          jsonUrl = ds.dataset("json-source-url") || ds.find(".json-data-source-url").val();
+          jsonDataSrc = ds.find(".json-data-source");
+          jsonDataStr = ds.dataset("json-data") || jsonDataSrc.val() || jsonDataSrc.text();
+          topLevelId = ds.dataset("top-level-id") || "";
+          jsonGetter = getJsonGetter(jsonUrl, jsonDataStr);
+
+          addButtonDisableTest = function() {
+              if (lastSelectionSelectable == false) {
+                  if (/BUTTON|INPUT/.test(selAdd[0].tagName)) {
+                      selAdd.attr("disabled", true);
+                  } else {
+                      selAdd.hide();
                   }
-                  j.list=j[listKey];
-                  $.each(j.list, function(c, i){
-                      i.id=i[idKey];
-                      i.label=i[labelKey];
-                      // Is it a data type that has children normally
-                      if (!$.isEmptyObject(i[childrenKey])) {
-                          // And does this instance actually have any children
-                          if (i[childrenKey].length != 0) {
-                              // where should the double escaping happen?
-                              i.children=escape(escape(i.id));
-                          }
-                      }
-                  });
-                  j.list.sort(cmp);
-                  onJson(j);
-              }, onError, notPending);
+              }
           };
-      }else{
-          jsonConverterGetter=jsonGetter;
+
+          selAdd.bind("disableTest", addButtonDisableTest).trigger("disableTest");
+
+          onSelection = function(info) {
+              //info.namespace, info.id, info.label, info.selectable, info.parent
+              while (info.selectable !== false && info.selectable !== true) {
+                  if (info.parent) {
+                      info = info.parent;
+                  } else {
+                      info.selectable=false;
+                  }
+              }
+
+              lastSelectionSelectable = info.selectable;
+              if (/BUTTON|INPUT/.test(selAdd[0].tagName)) {
+                  selAdd.attr("disabled", lastSelectionSelectable ? "" : "disabled");
+              } else {
+                  lastSelectionSelectable ? selAdd.show() : selAdd.hide();
+              }
+
+              selAdd.trigger("disableTest");
+              if (lastSelectionSelectable) {
+                  selAddNs = info.namespace;
+                  selAddId = info.id;
+                  selAddLabel = info.label;
+                  selAddDesc = info.desc;
+              } else {
+                  selAddNs = "";
+                  selAddId = "";
+                  selAddLabel = "";
+                  selAddDesc = "";
+              }
+
+              ds.find(".selection-added-in").val(selAddId);
+              ds.find(".selection-added-label").val(selAddLabel);
+              ds.find(".selection-added-desc").val(selAddDesc);
+              selAdd.find(".selection-added-id").text(selAddId);
+              selAdd.find(".selection-added-label").text(selAddLabel);
+              selAdd.find(".selection-added-desc").text(selAddDesc);
+          };
+
+          jsonConverterGetter = jsonGetter;
+          if (listKey || idKey || labelKey || childrenKey) {
+              listKey = listKey || "list";
+              idKey = idKey || "id";
+              labelKey = labelKey || "label";
+              descKey = descKey || "description";
+              childrenKey = childrenKey || "children";
+              cmp = fn("a, b->a.label == b.label ? 0 : (a.label > b.label ? 1 : -1)");
+
+              jsonConverterGetter = function (urlId, onJson, onError, notPending) {
+                  jsonGetter(urlId, function(j) {
+                      // convert json
+                      if (j.error) {
+                          if ($.isFunction(onError)) {
+                              onError(j.error);
+                          } else {
+                              alert("Error in json: " + j.error);
+                          }
+                          return;
+                      }
+                      j.list = j[listKey];
+                      $.each(j.list, function(c, i) {
+                          i.id = i[idKey];
+                          i.label = i[labelKey];
+                          if (descEnabled) {
+                              i.desc = i[descKey];
+                          }
+                          // Is it a data type that has children normally
+                          if (!$.isEmptyObject(i[childrenKey])) {
+                              // And does this instance actually have any children
+                              if (i[childrenKey].length != 0) {
+                                  // where should the double escaping happen?
+                                  i.children = escape(escape(i.id));
+                              }
+                          }
+                      });
+                      j.list.sort(cmp);
+                      onJson(j);
+                  }, onError, notPending);
+              };
+          } else {
+              jsonConverterGetter = jsonGetter;
+          }
+
+          var selLocation = $("<span style='color:green;'> [loading&#160;please&#160;wait...] </span>");
+          if (dropDownLocation) {
+              dropDownLocation.prepend(selLocation);
+          } else {
+              ds.append(selLocation);
+              ds.append(" "); // line break point of IE7
+          }
+
+          onJson = function(json) {
+              try{
+                  // inject default value if set
+                  var _default = ds.dataset("default-value");
+                  if (_default) {
+                      json["default"] = _default;
+                  }
+                  json.restored = ds.find(".selection-added-id").val();
+                  if (json.restored) {
+                      json.restored = ($.trim(json.restored) == "") ? null : json.restored;
+                  }
+                  // OK now build the select-option
+                  var o = buildSelectList(json, {"selectable" : 1}, jsonConverterGetter, onSelection);
+                  if (selectId) {
+                      o.attr("id", selectId);
+                      selectId = null;
+                  }
+                  selLocation.replaceWith(o);
+              } catch(e) {
+                  alert("Error in sourceDropDown onJson function - " + e.message);
+                  _gjson = json;
+                  throw e;
+              }
+          };
+
+          onError = function(status, err) {
+              selLocation.text("Error failed to load selection data: " + status);
+              selLocation.css("color", "red");
+              ds.parent().find(".item-add,.selection-add").attr("disabled", "disabled");
+              var retry = $("<a href='#'> retry</a>");
+              selLocation.append(retry);
+              retry.click(function() {
+                  selLocation.html(" [loading&#160;please&#160;wait...] ").css("color", "green");
+                  jsonConverterGetter(topLevelId, onJson, onError, true);
+                  return false;
+              });
+          }
+
+          jsonConverterGetter(topLevelId, onJson, onError, true);
+          ds.find(".selection-added").hide();
+          if (selAdd.dataset("add-on-click") != null) {
+              var saLabel, saId, saLabelWidth, sTemp, w;
+              saLabel = ds.parent().find(".selection-added-label");
+              saId = ds.parent().find(".selection-added-id");
+              saLabel.bind("onDataChanged", function() {
+                  ds.find(".selection-added").toggle(!!saLabel.val());
+                  if (dropDownLocation) {
+                      dropDownLocation.toggle(!saLabel.val());
+                  }
+                  if (!saLabelWidth) {
+                      saLabelWidth = saLabel.width();
+                  }
+                  if (saLabelWidth) {   // adjust width as required
+                      sTemp = $("<span/>");
+                      sTemp.text(saLabel.val() || "").hide().insertAfter(saLabel);
+                      w = sTemp.width() + 4;
+                      sTemp.remove();
+                      saLabel.width(w > saLabelWidth ? w : saLabelWidth);
+                  }
+              }); //.trigger("onDataChanged");
+
+              ds.parent().find(".clear-item").click(function() {
+                  saId.val("").trigger("onDataChanged");
+                  saLabel.val("").trigger("onDataChanged");
+                  selAdd.attr("disabled", false);
+                  selAdd.trigger("disableTest");
+                  return false;
+              });
+
+              selAdd.click(function() {
+                  saId.val(selAddId).trigger("onDataChanged");
+                  saLabel.val(selAddLabel).trigger("onDataChanged");
+                  selAdd.trigger("disableTest");
+                  if (!saLabelWidth) {
+                      saLabelWidth = saLabel.width();
+                  }
+                  if (saLabelWidth) {   // adjust width as required
+                      sTemp = $("<span/>");
+                      sTemp.text(selAddLabel).hide().insertAfter(saLabel);
+                      w = sTemp.width() + 4;
+                      sTemp.remove();
+                      saLabel.width(w > saLabelWidth ? w : saLabelWidth);
+                  }
+                  return false;
+              });
+          }
+          ds.dataset("done", 1);
+      } catch(e) {
+          alert("Error in sourceDropDown() - " + e.message);
       }
-      var selLocation=$("<span style='color:green;'> [loading&#160;please&#160;wait...] </span>");
-      if(dropDownLocation){
-        dropDownLocation.prepend(selLocation);
-      }else{
-        ds.append(selLocation);
-        ds.append(" "); // line break point of IE7
-      }
-      onJson=function(json){
-        try{
-            // inject default value if set
-            var _default=ds.dataset("default-value");
-            if(_default){
-                json["default"]=_default;
-            }
-            json.restored = ds.find(".selection-added-id").val();
-            if(json.restored){
-                json.restored=($.trim(json.restored)=="")?null:json.restored;
-            }
-            // OK now build the select-option
-            var o = buildSelectList(json, {"selectable":1}, jsonConverterGetter, onSelection);
-            if(selectId){
-                o.attr("id", selectId);
-                selectId=null;
-            }
-            selLocation.replaceWith(o);
-        }catch(e){
-            alert("Error in sourceDropDown onJson function - " + e.message);
-            _gjson=json;
-            throw e;
-        }
-      };
-      onError=function(status,err){
-        selLocation.text("Error failed to load selection data: "+status);
-        selLocation.css("color", "red");
-        ds.parent().find(".item-add,.selection-add").attr("disabled", "disabled");
-        var retry=$("<a href='#'> retry</a>");
-        selLocation.append(retry);
-        retry.click(function(){
-            selLocation.html(" [loading&#160;please&#160;wait...] ").css("color","green");
-            jsonConverterGetter(topLevelId, onJson, onError, true);
-            return false;
-        });
-      }
-      jsonConverterGetter(topLevelId, onJson, onError, true);
-      ds.find(".selection-added").hide();
-      if(selAdd.dataset("add-on-click")!=null){
-        var saLabel, saId, saLabelWidth, sTemp, w;
-        saLabel=ds.parent().find(".selection-added-label");
-        saId=ds.parent().find(".selection-added-id");
-        saLabel.bind("onDataChanged", function(){
-            ds.find(".selection-added").toggle(!!saLabel.val());
-            if(dropDownLocation)dropDownLocation.toggle(!saLabel.val());
-            if(!saLabelWidth){saLabelWidth=saLabel.width();}
-            if(saLabelWidth){   // adjust width as required
-                sTemp=$("<span/>");
-                sTemp.text(saLabel.val()||"").hide().insertAfter(saLabel);
-                w=sTemp.width()+4;
-                sTemp.remove();
-                saLabel.width(w>saLabelWidth?w:saLabelWidth);
-            }
-        }); //.trigger("onDataChanged");
-        ds.parent().find(".clear-item").click(function(){
-            saId.val("").trigger("onDataChanged");
-            saLabel.val("").trigger("onDataChanged");
-            selAdd.attr("disabled", false);
-            selAdd.trigger("disableTest");
-            return false;
-        });
-        selAdd.click(function(){
-            saId.val(selAddId).trigger("onDataChanged");
-            saLabel.val(selAddLabel).trigger("onDataChanged");
-            selAdd.trigger("disableTest");
-            if(!saLabelWidth){saLabelWidth=saLabel.width();}
-            if(saLabelWidth){   // adjust width as required
-                sTemp=$("<span/>");
-                sTemp.text(selAddLabel).hide().insertAfter(saLabel);
-                w=sTemp.width()+4;
-                sTemp.remove();
-                saLabel.width(w>saLabelWidth?w:saLabelWidth);
-            }
-            return false;
-        });
-      }
-      ds.dataset("done", 1);
-    }catch(e){
-        alert("Error in sourceDropDown() - "+e.message);
-    }
   }
 
   function formWidget(ctx, globalObject, validator){
@@ -1877,10 +1932,3 @@ var widgets={forms:[], globalObject:this};
     widgets.validator = validator;
     widgets.formWidget = formWidget;
 })(jQuery);
-
-
-
-
-
-
-

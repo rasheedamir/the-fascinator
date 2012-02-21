@@ -9,4 +9,4 @@ A textual summary/description of the release goes here...
 *Release Notes:* (so far... this version is unreleased)
 
  * Installation of Sonar on the build server has instigated wide spread standards checking and 'best practice' compliance across the codebase. Individual commits won't be added to this page, but you can always check out the [https://redbox-build.cqu.edu.au/sonar/ Sonar dashboard] as this will be an ongoing effort.
- * Drop down lists in Jaffa can now accept a 'description' field from a data source. r3163
+ * Drop down lists in Jaffa can now accept a 'description' field from a data source. r3163, r3165

@@ -1174,6 +1174,14 @@ var widgets={forms:[], globalObject:this};
               selAdd.find(".selection-added-id").text(selAddId);
               selAdd.find(".selection-added-label").text(selAddLabel);
               selAdd.find(".selection-added-desc").text(selAddDesc);
+              // On screen help (may not be present
+              if (selAddDesc == "") {
+                  ds.find(".selection-add-more-info-holder").hide();
+                  ds.find(".selection-add-more-info").html("");
+              } else {
+                  ds.find(".selection-add-more-info-holder").show();
+                  ds.find(".selection-add-more-info").html(selAddDesc);
+              }
           };
 
           jsonConverterGetter = jsonGetter;

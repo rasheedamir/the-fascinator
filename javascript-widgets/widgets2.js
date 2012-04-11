@@ -1168,7 +1168,7 @@ var widgets={forms:[], globalObject:this};
                   selAddDesc = "";
               }
 
-              ds.find(".selection-added-in").val(selAddId);
+              ds.find(".selection-added-id").val(selAddId);
               ds.find(".selection-added-label").val(selAddLabel);
               ds.find(".selection-added-desc").val(selAddDesc);
               selAdd.find(".selection-added-id").text(selAddId);

@@ -1,6 +1,17 @@
 #summary Details on the current release and all historic releases.
 
-= Current Release v1.0.6 =
+= Current Release v1.0.7 =
+
+This is another minor release primarily in support of projects deployed on the platform.
+
+*Release Date:* 10 April 2012
+
+ * Installation of Sonar on the build server has instigated wide spread standards checking and 'best practice' compliance across the codebase. This is only in its infancy, but you can always check out the [https://redbox-build.cqu.edu.au/sonar/ Sonar dashboard] as this will be an ongoing effort.
+ * Drop down lists in Jaffa can now accept a 'description' field from a data source. r3163, r3165
+ * Security Enhancements.
+
+----
+= v1.0.6 =
 
 Minor release primarily in support of projects deployed on the platform.
 

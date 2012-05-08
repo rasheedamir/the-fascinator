@@ -1,6 +1,18 @@
 #summary Details on the current release and all historic releases.
 
-= Current Release v1.0.7 =
+= Current Release v1.0.8 =
+
+Yet another minor release primarily in support of projects deployed on the platform. 
+
+*Release Date:* 9 May 2012
+
+ * A typo in drop-down widgets broke functionality. r3191
+ * Fixed critical bug in OAI-PMH Harvester on 'delete' records. issue #63, r3194
+ * More escaping of Strings used on screen.
+ * Uploaded files can now provide a 'context', allowing identical _filenames_ to be uploaded without being considered identical _files_ (provided they have different contexts). r3198
+
+----
+= v1.0.7 =
 
 This is another minor release primarily in support of projects deployed on the platform.
 

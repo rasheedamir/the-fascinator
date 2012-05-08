@@ -10,3 +10,5 @@ A textual summary/description of the release goes here...
 
  * A typo in drop-down widgets broke functionality. r3191
  * Fixed critical bug in OAI-PMH Harvester on 'delete' records. issue #63, r3194
+ * More escaping of Strings used on screen.
+ * Uploaded files can now provide a 'context', allowing identical _filenames_ to be uploaded without being considered identical _files_ (provided they have different contexts). r3198

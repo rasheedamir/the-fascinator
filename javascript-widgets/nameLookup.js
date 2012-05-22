@@ -42,7 +42,7 @@ var globalObject = this;
     });
 
     var displayNameLookups = function(json, position, queryTerm, callback,
-            getJson, nlaUrl) {
+            getJson, nlaUrl, nlaFirstname, nlaSurname) {
         var mintDiv, nlaDiv, display;
 
         display = function() {
@@ -116,61 +116,156 @@ var globalObject = this;
             });
 
             // National Library Integration
-            $.ajax({
-                url: nlaUrl,
-                dataType: "json",
-                timeout: 15000,
-                success: function(data) {
-                    $(".nlaLookup-progress").hide();
-                    var searchMetadata = data.metadata;
-                    nlaDiv.html("Showing first "+searchMetadata.rowsReturned+" records of "+searchMetadata.totalHits+" total.");
-
-                    nlaDiv.append("<hr/>");
-                    nlaDiv.append($("<table/>").append(tbody = $("<tbody/>")));
-                    $.each(data.results, function(c, result) {
-                        var radio, detailLink, name;
-                        // Radio input for each row
-                        id = "rId" + c;
-                        tr = $("<tr/>").append(td = $("<td/>"));
-                        radio = $("<input type='radio' name='name' />").attr("id", id);
-                        radio.val(JSON.stringify(result));
-                        label = $("<label/>").attr("for", id);
-                        name = result["displayName"];
-                        label.append(name);
-                        if (result["institution"]) {
-                            label.append(" - " + result["institution"]);
-                        }
-                        td.append(radio);
-                        td.append(label);
-
-                        // Show more details
-                        tr.append(td=$("<td/>"));
-                        detailLink = $("<a style='color:blue;' href='#'>details</a>");
-                        td.append(detailLink);
-                        tbody.append(tr);
-                        label.dblclick(function() {
-                            dialog.dialog("option", "buttons").OK();
-                        });
-                        detailLink.click(function(e) {
-                            var pos = dialog.parent().position();
-                            pos.left += 10;
-                            pos.top += 20;
-                            displayDetails(name, result, pos, radio, true);
-                            return false;
-                        });
-                    });
-                },
-                error: function(xhr, status, error) {
-                    $(".nlaLookup-progress").hide();
-                    nlaDiv.html("ERROR: "+status);
+            var nlaResultsDiv = $("<div/>");
+            var nlaResultsProcess = function(data) {
+                $(".nameLookup-waiting").hide();
+                $(".nlaLookup-progress").hide();
+                var searchMetadata = data.metadata;
+                var pageStart = searchMetadata.startRecord-0;
+                var pageRows = searchMetadata.rowsReturned-0;
+                var pageTotal = searchMetadata.totalHits-0;
+                var pageLast = (pageStart+pageRows-1);
+                if (pageTotal == 0) {
+                    pageStart = 0;
                 }
+                nlaResultsDiv.html("Showing "+pageStart+"-"+pageLast+" records of "+pageTotal+" total.");
+                // Pagination
+                var hasPrev = pageStart > 1;
+                var hasNext = pageLast < pageTotal;
+                var nlaPagination;
+                if (hasPrev || hasNext) {
+                    nlaResultsDiv.append(nlaPagination = $("<div/>"));
+                }
+                if (pageStart > 1) {
+                    var prevLink = $("<a href='#'>&laquo; prev ("+pageRows+")</a>");
+                    nlaPagination.append(prevLink);
+                    if (hasNext) {
+                        nlaPagination.append(" | ");
+                    }
+                    prevLink.click(function() {
+                        var newStart = pageStart - pageRows;
+                        if (newStart < 1) {
+                            newStart = 1;
+                        }
+                        pagedNlaSearch(newStart, pageRows);
+                    });
+                }
+                if (pageLast < pageTotal) {
+                    var nextLink = $("<a href='#'>next ("+pageRows+") &raquo;</a>");
+                    nlaPagination.append(nextLink);
+                    nextLink.click(function() {
+                        pagedNlaSearch(pageLast+1, pageRows);
+                    });
+                }
+
+                nlaResultsDiv.append("<hr/>");
+                nlaResultsDiv.append($("<table/>").append(tbody = $("<tbody/>")));
+                $.each(data.results, function(c, result) {
+                    var radio, detailLink, name;
+                    // Radio input for each row
+                    id = "rId" + c;
+                    tr = $("<tr/>").append(td = $("<td/>"));
+                    radio = $("<input type='radio' name='name' />").attr("id", id);
+                    radio.val(JSON.stringify(result));
+                    label = $("<label/>").attr("for", id);
+                    name = result["displayName"];
+                    label.append(name);
+                    if (result["institution"]) {
+                        label.append(" - " + result["institution"]);
+                    }
+                    td.append(radio);
+                    td.append(label);
+
+                    // Show more details
+                    tr.append(td=$("<td/>"));
+                    detailLink = $("<a style='color:blue;' href='#'>details</a>");
+                    td.append(detailLink);
+                    tbody.append(tr);
+                    label.dblclick(function() {
+                        dialog.dialog("option", "buttons").OK();
+                    });
+                    detailLink.click(function(e) {
+                        var pos = dialog.parent().position();
+                        pos.left += 10;
+                        pos.top += 20;
+                        displayDetails(name, result, pos, radio, true);
+                        return false;
+                    });
+                });
+            }
+            var nlaResultsError = function(xhr, status, error) {
+                $(".nameLookup-waiting").hide();
+                $(".nlaLookup-progress").hide();
+                nlaResultsDiv.html("ERROR: "+status);
+            }
+            function searchNla(start, rows) {
+                var nlaQuery = "start="+start+"&rows="+rows;
+                if (nlaSurname != null && nlaSurname != "") {
+                    nlaQuery += "&surname=" + escape(nlaSurname) + "";
+                }
+                if (nlaFirstname != null && nlaFirstname != "") {
+                    nlaQuery += "&firstName=" + escape(nlaFirstname) + "";
+                }
+                var url = nlaUrl.replace("{searchTerms}", escape(nlaQuery));
+                $(".nameLookup-waiting").show();
+                $(".nlaLookup-progress").show();
+                nlaResultsDiv.html("");
+                $.ajax({
+                    url: url,
+                    dataType: "json",
+                    timeout: 15000,
+                    success: nlaResultsProcess,
+                    error: nlaResultsError
+                });
+            }
+
+            // Search Form
+            var nlaTbody, nlaTrow, nlaTcell;
+            nlaDiv.append($("<table/>").append(nlaTbody = $("<tbody/>")));
+
+            var nlaFirstnameInput = $("<input id='nlaFirstname' type='text' />");
+            nlaFirstnameInput.val(nlaFirstname);
+            nlaTbody.append(nlaTrow = $("<tr/>"));
+            nlaTrow.append(nlaTcell = $("<td/>"));
+            nlaTcell.append("<label for='nlaFirstname'>First Name:</label>");
+            nlaTrow.append(nlaTcell = $("<td/>"));
+            nlaTcell.append(nlaFirstnameInput);
+
+            var nlaSurnameInput = $("<input id='nlaSurname' type='text' />");
+            nlaSurnameInput.val(nlaSurname);
+            nlaTbody.append(nlaTrow = $("<tr/>"));
+            nlaTrow.append(nlaTcell = $("<td/>"));
+            nlaTcell.append("<label for='nlaSurname'>Surname:</label>");
+            nlaTrow.append(nlaTcell = $("<td/>"));
+            nlaTcell.append(nlaSurnameInput);
+
+            var nlaSearch = $("<input type='button' value='Search' />");
+            nlaDiv.append(nlaSearch);
+            nlaDiv.append("<hr/>");
+            nlaDiv.append(nlaResultsDiv);
+            nlaFirstnameInput.keypress(function(e) {
+                if (e.which == 13) nlaSearch.click();
             });
+            nlaSurnameInput.keypress(function(e) {
+                if (e.which == 13) nlaSearch.click();
+            });
+
+            // Search metadata wrappers
+            function pagedNlaSearch(start, rows) {
+                nlaFirstname = $.trim(nlaFirstnameInput.val());
+                nlaSurname = $.trim(nlaSurnameInput.val());
+                searchNla(start, rows);
+            }
+            nlaSearch.click(function() {
+                pagedNlaSearch(1, 10);
+            });
+            pagedNlaSearch(1, 10);
         };
 
         var loaderGif = $(".nameLookup-progress").html();
         var tabbedDiv = $("<div><ul><li><a href=\"#mintLookupDialog\">Mint</a></li><li><a href=\"#nlaLookupDialog\">NLA<span class=\"nlaLookup-progress\"> "+loaderGif+"</span></a></li></ul></div>");
         mintDiv = $("<div id=\"mintLookupDialog\"></div>");
-        nlaDiv = $("<div id=\"nlaLookupDialog\">Searching National Library. Please wait... "+loaderGif+"</div>");
+        nlaDiv = $("<div id=\"nlaLookupDialog\"><div class='nameLookup-waiting'>Searching National Library. Please wait... "+loaderGif+"</div></div>");
         tabbedDiv.append(mintDiv);
         tabbedDiv.append(nlaDiv);
 
@@ -212,13 +307,12 @@ var globalObject = this;
             nla = false;
         }
 
-        detailDialog.html("Known identities for:");
-        detailDialog.append("<h3>"+name+"</h3>");
-        detailDialog.append("NLA Link: <a href=\""+details["nlaId"]+"\" target=\"_blank\">"+details["nlaId"]+"</a>");
-        detailDialog.append("<hr/>");
-
         // National Library
         if (nla === true) {
+            detailDialog.html("Known identities for:");
+            detailDialog.append("<h3>"+name+"</h3>");
+            detailDialog.append("NLA Link: <a href=\""+details["nlaId"]+"\" target=\"_blank\">"+details["nlaId"]+"</a>");
+            detailDialog.append("<hr/>");
             data = details["knownIdentities"];
             if (data) {
                 table = $("<table/>");
@@ -241,6 +335,8 @@ var globalObject = this;
 
         // Mint
         } else {
+            detailDialog.html("Details for:");
+            detailDialog.append("<h3>"+name+"</h3>");
             data = details["result-metadata"]["all"];
             if (data) {
                 table = $("<table/>");
@@ -308,16 +404,8 @@ var globalObject = this;
             queryTerm = $.trim($.makeArray(queryTerm).join(" "));
 
             // Get our NLA URL values whilst here
-            var nlaQuery = "";
-            var surname = parent.find(".familyName").val();
-            if (surname != null && surname != "") {
-                nlaQuery = "surname="+surname+"";
-            }
-            var firstName = parent.find(".givenName").val();
-            if (firstName != null && firstName != "") {
-                nlaQuery += "&firstName="+firstName+"";
-            }
-            var nlaSearchUrl = nlaUrl.replace("{searchTerms}", escape(nlaQuery));
+            var nlaSurname = parent.find(".familyName").val();
+            var nlaFirstname = parent.find(".givenName").val();
 
             // Note: double escape the parameter because it is being passed as a parameter inside a parameter
             progressElem.show();
@@ -387,7 +475,7 @@ var globalObject = this;
                     //alert(json.results.length);
                     var position = target.position();
                     displayNameLookups(json, position, queryTerm,
-                        selectedNameCallback, cGetJson, nlaSearchUrl);
+                        selectedNameCallback, cGetJson, nlaUrl, nlaFirstname, nlaSurname);
                 }
             });
             return false;

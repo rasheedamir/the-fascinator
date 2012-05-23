@@ -1,8 +1,21 @@
 #summary Details on the current release and all historic releases.
 
-= Current Release v1.0.8 =
+= Current Release v1.1 =
 
-Yet another minor release primarily in support of projects deployed on the platform. 
+Last release under the [http://www.redboxresearchdata.com.au/governance/eif048 EIF048 funding], the bug fixes and improvements from this version, combined with the last few versions were in support of the ReDBox v1.5 release.
+
+*Release Date:* 23 May 2012
+
+ * Caching configuration for 'off' profile fixed. issue #65, r3218
+ * Some additional logging from the search script when purging the session of cached search filters. r3220
+ * Added improved Solr field for sorting alpha numeric strings. r3222
+ * The last page of result in the OAI-PMH feed no longer sends a resumption token. issue #11, r3224
+ * Bug fix for property substitution when retrieving lists of Strings from Json Library. r3226
+
+----
+= v1.0.8 =
+
+Yet another minor release primarily in support of projects deployed on the platform.
 
 *Release Date:* 9 May 2012
 

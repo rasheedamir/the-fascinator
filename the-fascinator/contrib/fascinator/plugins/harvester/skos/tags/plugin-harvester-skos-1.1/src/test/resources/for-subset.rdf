@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+   xmlns:dc="http://purl.org/dc/terms/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+>
+  <rdf:Description rdf:about="http://purl.org/anzsrc/for/#for">
+    <dc:license xml:lang="en">Creative Commons Attribution 2.5 Australia licence</dc:license>
+    <dc:license rdf:resource="http://creativecommons.org/licenses/by/2.5/au/"/>
+    <dc:description xml:lang="en">The ANZSRC FOR allows R&amp;D activity to be categorised according to the methodology used in the R&amp;D, rather than the activity of the unit performing the R&amp;D or the purpose of the R&amp;D.
+    The categories in the classification include major fields and related sub-fields of research and emerging areas of study investigated by businesses, universities, tertiary institutions, national research institutions and other organisations. 
+    This classification allows the categorisation of fields of research activity within Australia and New Zealand. </dc:description>
+    <dc:provenance xml:lang="en">This document describes the ANZSRC Field of Research codes as described by the Australian Bureau of Statistics (http://www.abs.gov.au) and released under a Creative Commons Attribution 2.5 Australia license (http://creativecommons.org/licenses/by/2.5/au/).</dc:provenance>
+    <dc:publisher xml:lang="en">University of Southern Queensland</dc:publisher>
+    <dc:title xml:lang="en">Australian and New Zealand Standard Research Classification (ANZSRC): Fields of Research.</dc:title>
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+    <skos:hasTopConcept rdf:resource="http://purl.org/anzsrc/for/#division_01"/>
+    <skos:hasTopConcept rdf:resource="http://purl.org/anzsrc/for/#division_02"/>
+    <dc:date>2008</dc:date>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/anzsrc/for/#division_01">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:narrower rdf:resource="http://purl.org/anzsrc/for/#group_0102"/>
+    <skos:narrower rdf:resource="http://purl.org/anzsrc/for/#group_0101"/>
+    <skos:prefLabel xml:lang="en">010000 - MATHEMATICAL SCIENCES</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://purl.org/anzsrc/for/#for"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/anzsrc/for/#division_02">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:narrower rdf:resource="http://purl.org/anzsrc/for/#group_0202"/>
+    <skos:narrower rdf:resource="http://purl.org/anzsrc/for/#group_0201"/>
+    <skos:prefLabel xml:lang="en">020000 - PHYSICAL SCIENCES</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://purl.org/anzsrc/for/#for"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/anzsrc/for/#group_0102">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:narrower rdf:resource="http://purl.org/anzsrc/for/#field_010202"/>
+    <skos:narrower rdf:resource="http://purl.org/anzsrc/for/#field_010201"/>
+    <skos:prefLabel xml:lang="en">010200 - APPLIED MATHEMATICS</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://purl.org/anzsrc/for/#for"/>
+    <skos:broader rdf:resource="http://purl.org/anzsrc/for/#division_01"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/anzsrc/for/#field_010202">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:prefLabel xml:lang="en">010202 - Biological Mathematics</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://purl.org/anzsrc/for/#for"/>
+    <skos:broader rdf:resource="http://purl.org/anzsrc/for/#group_0102"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/anzsrc/for/#field_010201">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:prefLabel xml:lang="en">010201 - Approximation Theory and Asymptotic Methods</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://purl.org/anzsrc/for/#for"/>
+    <skos:broader rdf:resource="http://purl.org/anzsrc/for/#group_0102"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/anzsrc/for/#group_0101">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:narrower rdf:resource="http://purl.org/anzsrc/for/#field_010102"/>
+    <skos:narrower rdf:resource="http://purl.org/anzsrc/for/#field_010101"/>
+    <skos:prefLabel xml:lang="en">010100 - PURE MATHEMATICS</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://purl.org/anzsrc/for/#for"/>
+    <skos:broader rdf:resource="http://purl.org/anzsrc/for/#division_01"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/anzsrc/for/#field_010102">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:prefLabel xml:lang="en">010102 - Algebraic and Differential Geometry</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://purl.org/anzsrc/for/#for"/>
+    <skos:broader rdf:resource="http://purl.org/anzsrc/for/#group_0101"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/anzsrc/for/#field_010101">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:prefLabel xml:lang="en">010101 - Algebra and Number Theory</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://purl.org/anzsrc/for/#for"/>
+    <skos:broader rdf:resource="http://purl.org/anzsrc/for/#group_0101"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/anzsrc/for/#group_0202">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:narrower rdf:resource="http://purl.org/anzsrc/for/#field_020202"/>
+    <skos:narrower rdf:resource="http://purl.org/anzsrc/for/#field_020201"/>
+    <skos:prefLabel xml:lang="en">020200 - ATOMIC, MOLECULAR, NUCLEAR, PARTICLE AND PLASMA PHYSICS</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://purl.org/anzsrc/for/#for"/>
+    <skos:broader rdf:resource="http://purl.org/anzsrc/for/#division_02"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/anzsrc/for/#field_020202">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:prefLabel xml:lang="en">020202 - Nuclear Physics</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://purl.org/anzsrc/for/#for"/>
+    <skos:broader rdf:resource="http://purl.org/anzsrc/for/#group_0202"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/anzsrc/for/#field_020201">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:prefLabel xml:lang="en">020201 - Atomic and Molecular Physics</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://purl.org/anzsrc/for/#for"/>
+    <skos:broader rdf:resource="http://purl.org/anzsrc/for/#group_0202"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/anzsrc/for/#group_0201">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:narrower rdf:resource="http://purl.org/anzsrc/for/#field_020101"/>
+    <skos:narrower rdf:resource="http://purl.org/anzsrc/for/#field_020102"/>
+    <skos:prefLabel xml:lang="en">020100 - ASTRONOMICAL AND SPACE SCIENCES</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://purl.org/anzsrc/for/#for"/>
+    <skos:broader rdf:resource="http://purl.org/anzsrc/for/#division_02"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/anzsrc/for/#field_020101">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:prefLabel xml:lang="en">020101 - Astrobiology</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://purl.org/anzsrc/for/#for"/>
+    <skos:broader rdf:resource="http://purl.org/anzsrc/for/#group_0201"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/anzsrc/for/#field_020102">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:prefLabel xml:lang="en">020102 - Astronomical and Space Instrumentation</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://purl.org/anzsrc/for/#for"/>
+    <skos:broader rdf:resource="http://purl.org/anzsrc/for/#group_0201"/>
+  </rdf:Description>
+</rdf:RDF>

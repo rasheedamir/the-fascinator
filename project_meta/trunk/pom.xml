@@ -86,6 +86,13 @@
                 <role>Developer</role>
             </roles>
         </developer>
+        <developer>
+            <id>brazzata</id>
+            <name>Andrew Brazzatti</name>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </developer>
     </developers>
     <inceptionYear>2009</inceptionYear>
     <mailingLists>

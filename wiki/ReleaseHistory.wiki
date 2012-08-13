@@ -1,6 +1,15 @@
 #summary Details on the current release and all historic releases.
+= Current Release v1.1.1 =
+Bug fix release to support the ReDBox v1.5.1 release.
 
-= Current Release v1.1 =
+*Release Date:* 13 August 2012
+
+ * Fixed resumption token issue in OAI-PMH feed that was causing the ANDS harvester to fail. issue #69, r3248
+ * Various Apache Maven configuration changes to make the build more reliable 
+
+
+----
+= v1.1 =
 
 Last release under the [http://www.redboxresearchdata.com.au/governance/eif048 EIF048 funding], the bug fixes and improvements from this version, combined with the last few versions were in support of the ReDBox v1.5 release.
 

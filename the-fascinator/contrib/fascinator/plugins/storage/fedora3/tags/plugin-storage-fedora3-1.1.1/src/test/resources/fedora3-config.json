@@ -1,0 +1,10 @@
+{
+    "storage": {
+        "type": "fedora3",
+        "fedora3": {
+            "url": "http://localhost:8888/fedora/",
+            "username": "fedoraAdmin",
+            "password": "fedoraAdmin"
+        }
+    }
+}

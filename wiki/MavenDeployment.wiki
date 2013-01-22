@@ -1,4 +1,4 @@
-#summary Instructions and information on deploying Maven artifacts.
+#summary Moved to https://sites.google.com/site/fascinatorhome/home/documentation/technical/documents/deploying-to-maven
 #labels maven
 = Introduction =
 

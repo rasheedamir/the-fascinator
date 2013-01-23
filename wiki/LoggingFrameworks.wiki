@@ -1,4 +1,4 @@
-#summary Detailed information on application logging frameworks, dependencies and configuration.
+#summary Moved to https://sites.google.com/site/fascinatorhome/home/documentation/technical/documents/logging-frameworks
 
 = Introduction =
 Java logging gives me a considerable headache. This page is an attempt to provide detailed information on The Fascinator's use of the various logging libraries available, and how the end-user can make use of it all.

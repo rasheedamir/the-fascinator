@@ -1,4 +1,4 @@
-#summary A planning document for a Backup/Migration tool
+#summary Moved to https://sites.google.com/site/fascinatorhome/home/documentation/technical/investigations/backup-migration-tool
 = Introduction =
 I'm starting to look at building a tool similar to the !HarvestClient (in that it can be run outside of the server) that would grab a backed up storage directory/plugin and rebuild a system on top of it. There are some old skeletons in Fascinator's closet that will cause problems here depending on the scope however, so I thought I'd put together some thoughts on how to proceed.
 

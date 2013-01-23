@@ -1,4 +1,4 @@
-#summary Details on the current release and all historic releases.
+#summary Moved to https://github.com/the-fascinator/the-fascinator/blob/master/release-history.md
 = Current Release v1.1.1 =
 Bug fix release to support the ReDBox v1.5.1 release.
 

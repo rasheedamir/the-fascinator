@@ -1,4 +1,4 @@
-#summary A current list of 3rd party dependencies used by the core platform.
+#summary Moved to https://sites.google.com/site/fascinatorhome/home/documentation/technical/documents/third-party-depenedencies
 
 = Introduction =
 This list contains information on all current third party dependencies in use by The Fascinator. Developers who add new dependencies should try to keep this list up to date.

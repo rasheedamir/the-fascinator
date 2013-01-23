@@ -1,4 +1,4 @@
-#summary Running notes on the next release currently under development.
+#summary Now maintained at https://github.com/the-fascinator/the-fascinator/blob/master/release-history.md
 
 = Next Version: v1.2 =
 
